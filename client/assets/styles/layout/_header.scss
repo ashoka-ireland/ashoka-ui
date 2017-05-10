@@ -3,14 +3,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 4em;
-  background: $white;
+  height: 6em;
+  background: $black;
   box-shadow: 0 4px 30px 0 rgba($navy, 0.1);
   padding: 0 $pad;
 
   img {
-    height: 24px;
-    margin: 1em 2em 0 0;
+    height: 60px;
+    margin: 0 2em;
     align-self: center;
   }
 
@@ -24,12 +24,10 @@
       float: left;
       margin: 0;
       padding: 0;
-      padding-right: 0.5em;
     }
     a {
       color: $inactive-color;
       letter-spacing: 0.09em;
-      text-decoration: none;
       &:hover {
         color: $blue;
       }
@@ -37,14 +35,5 @@
     i {
       font-size: $font-size-large;
     }
-  }
-}
-
-@media (max-width: $bp-xs) {
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-    height: auto;
-    padding: $pad;
   }
 }

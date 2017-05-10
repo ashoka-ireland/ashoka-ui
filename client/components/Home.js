@@ -1,41 +1,76 @@
 import React from 'react';
-import { Card } from 'antd';
-const logo = require('assets/img/m.png');
+import { Form, Input, Progress, Checkbox } from 'antd';
+const FormItem = Form.Item;
+
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 5 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 12 },
+  },
+};
 
 const Home = () => {
   return (
-    <Card>
-      <div className="home-page">
-        <p className="text-center">
-          <img src={logo} alt="Metropolis" className="logo" />
-          <h1>Welcome to the Metropolis UI Boilerplate</h1><br />
-        </p>
-        <hr className="divider" />
-        <h2 className="slogan">This <strong>ReactJS</strong> Boilerplate is a good starting point for whenever you require a User Interface for your project.
-          It is a purpose built Front-end Stack, that follows industry standards and best practices.</h2>
+    <div className="home-page">
+      <p className="text-center">
+        <h1>Ashoka Changemaker Questionnaire</h1><br />
+      </p>
+      <hr className="divider" />
+      <h2 className="slogan"><Progress percent={30} /></h2>
 
-        <hr className="divider secondary" />
-        <h3 className="first">What's inside...</h3>
-        <p>
-          Under the hood, Metropolis UI uses <strong>ReactJS</strong>, <strong>Redux</strong>, <strong>Webpack</strong> and <strong>Ant Design</strong>, a (<a href="https://ant.design/" target="_blank">React UI Library</a>).</p>
-        <hr className="divider secondary" />
-        <h3>ReactJS / Redux / Webpack</h3>
-        <p>
-          <a href="https://facebook.github.io/react/" target="_blank">ReactJS</a> - A Javascript library for building User Interfaces.
-        </p>
-        <p>
-          <a href="http://redux.js.org/docs/introduction/" target="_blank">Redux</a> - A predictable state container for JavaScript apps.
-        </p>
-        <p>
-          <a href="https://webpack.github.io/" target="_blank">Webpack</a> - A module bundler that takes modules with dependencies and emits static assets representing those modules.
-        </p>
-        <hr className="divider secondary" />
-        <h3>Ant Design</h3>
-        <p>
-          <a href="https://ant.design/" target="_blank">Ant Design</a> - A <strong>React UI library</strong> that contains a set of high quality components and demos for building rich interactive desktop applications.
-        </p>
-      </div>
-    </Card>
+      <hr className="divider secondary" />
+      <Form>
+        <FormItem
+          {...formItemLayout}
+          label="First Name"
+        >
+          <Input placeholder="First Name" />
+        </FormItem>
+
+      <FormItem
+        {...formItemLayout}
+        label="Surname"
+      >
+        <Input placeholder="Surname" />
+      </FormItem>
+
+      <FormItem
+        {...formItemLayout}
+        label="Email"
+      >
+        <Input placeholder="Email" />
+      </FormItem>
+
+      <FormItem
+          {...formItemLayout}
+          label="Primary Phone Number"
+        >
+            <Input addonBefore="+353" />
+        </FormItem>
+
+        <FormItem
+            {...formItemLayout}
+            label="Secondary Phone Number"
+          >
+              <Input addonBefore="+353" />
+          </FormItem>
+
+          <FormItem
+            {...formItemLayout}
+            label="Website"
+          >
+            <Input placeholder="Website 1" />
+            <p><Input placeholder="Website 2" /></p>
+            <Checkbox>I don't have a website.</Checkbox>
+          </FormItem>
+
+    </Form>
+
+    </div>
   );
 };
 

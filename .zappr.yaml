@@ -1,0 +1,11 @@
+X-Zalando-Team: metropolis
+X-Zalando-Type: code
+approvals:
+  minimum: 2
+  pattern: "^(:\\+1:|👍|LGTM|lgtm)"
+  veto:
+    pattern: "^(:\\-1:|👎)"
+  from:
+    orgs:
+      - metropolis
+    collaborators: true

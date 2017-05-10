@@ -17,7 +17,6 @@ coverage
 
 # test reports
 report.xml
-.nyc_output
 
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
@@ -34,7 +33,6 @@ node_modules
 
 #dist folder
 dist
-dist-server
 
 # IDEA/Webstorm project files
 .idea

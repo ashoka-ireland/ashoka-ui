@@ -23,16 +23,16 @@
 }
 @media (min-width: $bp-lg) {
   .container {
-    width: 1170px;
+    width: 970px;
   }
 }
 @media (min-width: $bp-xl) {
   .container {
-    width: 1260px;
+    width: 970px;
   }
 }
 
 main {
   flex: 1;
-  margin: 4em 0;
+  margin: 2em 0;
 }

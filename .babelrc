@@ -1,0 +1,21 @@
+{
+  "presets": [
+    "latest",
+    "react",
+    "stage-1"
+  ],
+  "plugins": [["import", { "libraryName": "antd", "style": "css" }]],
+  "env": {
+    "development": {
+      "presets": [
+        "react-hmre"
+      ]
+    },
+    "production": {
+      "plugins": [
+        "transform-react-constant-elements",
+        "transform-react-remove-prop-types"
+      ]
+    }
+  }
+}
