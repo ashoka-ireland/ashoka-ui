@@ -1,0 +1,38 @@
+.flex {
+  display: flex;
+}
+
+.fx-right {
+  margin-left: auto;
+}
+
+.fx-center {
+  justify-content: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.hug {
+  margin-top: 0;
+}
+
+.divider {
+  height: 1px;
+  margin: 2em 0;
+  border: 0;
+  background: #d1d1d1;
+  &.secondary {
+    background: #ededed;
+  }
+}
+
+// Text Styles
+em { font-style: italic; }
+strong { font-weight: $font-weight-bold !important; }
+.uppercase { text-transform: uppercase; }

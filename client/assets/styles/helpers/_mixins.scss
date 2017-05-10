@@ -1,0 +1,38 @@
+/* Mixins */
+
+// @param $move {Boolean} - determines whether the card should move 4px up on hover
+@mixin card-hover($move: false) {
+  box-shadow: $card-shadow !important;
+  will-change: box-shadow;
+  transition: box-shadow 0.35s ease-out;
+  border: 0 none !important;
+
+  @if $move == true {
+    will-change: transform, box-shadow !important;
+    transform: translate(0, 0) !important;
+    transition: box-shadow 0.35s ease-out, transform 0.3s ease-out !important;
+  }
+
+  &:hover {
+    box-shadow: $card-shadow-hover !important;
+    border: 0 none !important;
+
+    @if $move == true {
+      transform: translate(0, -4px) !important;
+    }
+  }
+}
+
+@mixin placeholder-color($colour) {
+  &::placeholder {
+    color: $colour;
+  }
+}
+
+@mixin default-font {
+  font-family: $font-stack;
+  font-weight: $font-weight-regular;
+  color: $navy;
+  line-height: 1.25;
+  letter-spacing: 0.0125em;
+}

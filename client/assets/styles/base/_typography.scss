@@ -1,0 +1,76 @@
+html {
+  height: 100%;
+  font-family: $font-stack;
+  font-size: $html-font-size;
+  font-weight: $font-weight-regular;
+  line-height: $html-line-height;
+  overflow-x: hidden;
+  box-sizing: border-box !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit !important;
+}
+
+body {
+  background: $background-grey;
+  color: $text-color;
+  font-size: $font-size-regular;
+  line-height: $line-height-regular;
+}
+
+a {
+  color: $blue;
+}
+
+// Header Styles
+h1, h2, h3, h4, h5, h6 {
+  font-weight: $font-weight-bold;
+  margin: 0;
+  line-height: $line-height-large;
+
+  a {
+    font-weight: inherit;
+  }
+}
+
+h1 {
+  font-size: 4.242rem;
+  line-height: 4.5rem;
+  margin-top: 3rem;
+}
+
+h2 {
+  font-size: 2.828rem;
+  line-height: 3rem;
+  margin-top: 3rem;
+}
+
+h3 {
+  font-size: 2.414rem;
+}
+
+h4 {
+  font-size: 1.707rem;
+}
+
+h5 {
+  font-size: 1.4713333333333333rem;
+}
+
+h6 {
+  font-size: 1.3535rem;
+}
+
+blockquote {
+  line-height: $line-height-regular;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+p {
+  line-height: $line-height-regular;
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+}

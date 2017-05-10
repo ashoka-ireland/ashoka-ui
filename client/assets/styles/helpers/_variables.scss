@@ -1,0 +1,66 @@
+// Fonts
+$font-stack: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+// HTML Font Sizes
+$html-font-size: 62.5%;
+$html-line-height: 1;
+
+// Body font Sizes
+$font-size-small: 12px;
+$font-size-regular: 14px;
+$font-size-large: 16px;
+
+// Weights
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-bold: 600;
+$font-weight-heavy: 700;
+
+// Line Height
+$line-height-small: 1.3;
+$line-height-regular: 1.5;
+$line-height-large: 1.8;
+
+
+// Spacing
+$pad-small: 0.5em;
+$pad: 1em;
+$pad-large: 2em;
+
+// Radius
+$radius: 4px;
+
+// Colors
+$white: #fff;
+$navy: #3b4561;
+$light-navy: #747c90;
+$blue: #2e8cff;
+$red: #ff4a25;
+$green: #2ecc71;
+$orange: rgba(255, 119, 15, 1);
+$background-grey: #f4f4f7;
+$light-grey: #cecedb;
+
+$text-color: $navy;
+
+$primary-color: $blue;
+$secondary-color: $orange;
+$active-color: $green;
+$pending-color: $orange;
+$warning-color: $red;
+$focus-color: $blue;
+$inactive-color: $light-navy;
+$menu-background-color: rgba($white, 0.975);
+
+$background-blur: true;
+
+// Breakpoints
+$bp-xs: 480px;
+$bp-sm: 768px;
+$bp-md: 992px;
+$bp-lg: 1200px;
+$bp-xl: 1300px;
+
+// Card shadow
+$card-shadow: 0 2px 8px 0 rgba($navy, 0.15);
+$card-shadow-hover: 0 15px 20px 0 rgba($navy, 0.25);

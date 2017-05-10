@@ -1,0 +1,22 @@
+.home-page {
+
+  img {
+    height: 80px;
+  }
+  h1 {
+    font-weight: 400;
+    margin-top: 0.5em;
+  }
+  h2 {
+    margin-top: 2em;
+    &.first {
+      margin-top: 1em;
+    }
+  }
+
+  .slogan {
+    margin-top: 0;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+}

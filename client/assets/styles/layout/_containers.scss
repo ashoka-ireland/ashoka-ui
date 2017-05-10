@@ -1,0 +1,38 @@
+.app {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  font-size: $font-size-large;
+}
+@media (min-width: $bp-sm) {
+  .container {
+    width: 750px;
+  }
+}
+@media (min-width: $bp-md) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: $bp-lg) {
+  .container {
+    width: 1170px;
+  }
+}
+@media (min-width: $bp-xl) {
+  .container {
+    width: 1260px;
+  }
+}
+
+main {
+  flex: 1;
+  margin: 4em 0;
+}
