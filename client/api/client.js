@@ -34,7 +34,9 @@ class apiClient {
     const ref = firebase.database().ref(USERS_PATH);
     return ref.orderByChild('userName')
       .startAt(cursor)
-      .limitToFirst(limit);
+      .limitToFirst(limit)
+      .once('value')
+      .then(response => ({ response: response.val() }));
   }
 }
 
