@@ -3,4 +3,5 @@ export Footer from './Footer';
 export Header from './Header';
 export SurveyPage from './SurveyPage';
 export NotFound from './NotFound';
+export LoginPage from './LoginPage';
 export UsersPage from './UsersPage';

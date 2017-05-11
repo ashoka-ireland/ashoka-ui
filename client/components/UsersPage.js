@@ -5,20 +5,20 @@ const columns = [{
   title: 'Name',
   dataIndex: 'name',
 }, {
-  title: 'Age',
-  dataIndex: 'age',
+  title: 'Email',
+  dataIndex: 'email',
 }, {
-  title: 'Address',
-  dataIndex: 'address',
+  title: 'Phone',
+  dataIndex: 'phone',
 }];
 
 const data = [];
 for (let i = 0; i < 46; i++) {
   data.push({
     key: i,
-    name: `Edward King ${i}`,
-    age: 32,
-    address: `London, Park Lane no. ${i}`,
+    name: `Ashoka Project ${i}`,
+    email: 'ashokasocialapi@gmail.com',
+    phone: '12345678'
   });
 }
 

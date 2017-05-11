@@ -4,12 +4,14 @@ import Footer from 'components/Footer';
 
 const App = (props) => {
   return (
-    <div className="app">
-      <Header></Header>
-      <main className="container">
+    <div class="app">
+      <Header />
+
+      <main class="container">
         {props.children}
       </main>
-      <Footer></Footer>
+
+      <Footer />
     </div>
   );
 };

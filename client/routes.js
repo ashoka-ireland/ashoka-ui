@@ -5,13 +5,19 @@ import {
   App,
   SurveyPage,
   NotFound,
-  UsersPage
+  UsersPage,
+  LoginPage
 } from 'components';
 
+const isAuthenticated = () => {};
+
 export default (
-  <Route path="/" component={App}>
-    <IndexRoute component={SurveyPage} />
-    <Route path="users" component={UsersPage} />
-    <Route path="*" component={NotFound} />
-  </Route>
+  <div>
+    <Route path="/login" component={LoginPage} />
+    <Route path="/" component={App} onEnter={isAuthenticated}>
+      <IndexRoute component={SurveyPage} />
+      <Route path="users" component={UsersPage} />
+      <Route path="*" component={NotFound} />
+    </Route>
+  </div>
 );
