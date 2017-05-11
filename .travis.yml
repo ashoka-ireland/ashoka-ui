@@ -21,7 +21,7 @@ before_install:
 install:
   - yarn
 
-script: yarn build
+script: npm rebuild node-sass && yarn build
 
 deploy:
   provider: firebase
