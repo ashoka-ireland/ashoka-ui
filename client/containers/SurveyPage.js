@@ -57,7 +57,9 @@ class SurveyPage extends Component {
           <FormItem
             {...formItemLayout}
             label="First Name">
-            { getFieldDecorator(constants.FIRST_NAME)(
+            { getFieldDecorator(constants.FIRST_NAME, {
+              rules: [{ required: true, message: 'Please input a first name' }],
+            })(
                 <Input placeholder="First Name" />
               )
             }
@@ -67,7 +69,9 @@ class SurveyPage extends Component {
           {...formItemLayout}
           label="Surname"
         >
-          { getFieldDecorator(constants.LAST_NAME)(
+          { getFieldDecorator(constants.LAST_NAME, {
+            rules: [{ required: true, message: 'Please input a last name' }],
+          })(
               <Input placeholder="Surname"/>
             )
           }
@@ -77,7 +81,9 @@ class SurveyPage extends Component {
           {...formItemLayout}
           label="Email"
         >
-          { getFieldDecorator(constants.EMAIL)(
+          { getFieldDecorator(constants.EMAIL, {
+            rules: [{ required: true, message: 'Please input an email' }],
+          })(
               <Input placeholder="Email"/>
             )
           }
@@ -87,7 +93,12 @@ class SurveyPage extends Component {
             {...formItemLayout}
             label="Primary Phone Number"
           >
-          { getFieldDecorator(constants.PRIMARY_DIAL_CODE)(
+          { getFieldDecorator(constants.PRIMARY_DIAL_CODE, {
+            rules: [
+              { required: true, message: 'Please input a primary phone number' },
+              { type: 'number', message: 'Please enter a number' }
+            ],
+          })(
               <Input addonBefore="+353"/>
             )
           }
