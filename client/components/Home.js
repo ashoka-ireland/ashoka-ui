@@ -22,8 +22,10 @@ const Home = () => {
       <hr className="divider" />
       <h2 className="slogan"><Progress percent={30} /></h2>
 
-      <hr className="divider secondary" />
+
       <Form>
+        <h2>Section 1 - About You</h2>
+        <hr className="divider secondary" />
         <FormItem
           {...formItemLayout}
           label="First Name"
@@ -66,6 +68,14 @@ const Home = () => {
             <Input placeholder="Website 1" />
             <p><Input placeholder="Website 2" /></p>
             <Checkbox>I don't have a website.</Checkbox>
+          </FormItem>
+
+          <FormItem
+            {...formItemLayout}
+            label="Twitter Username"
+          >
+            <Input addonBefore="@" />
+            <Checkbox>I don't have one.</Checkbox>
           </FormItem>
 
     </Form>
