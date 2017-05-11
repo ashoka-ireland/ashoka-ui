@@ -19,7 +19,7 @@ class Header extends Component {
           <IndexLink to="/"><img src={logo} alt="Ashoka" className="logo" /></IndexLink>
         </div>
 
-        <Menu mode="horizontal">
+        <Menu mode="horizontal" theme="dark">
           <Menu.Item key="survey">
             <Link to="/survey">Survey</Link>
           </Menu.Item>

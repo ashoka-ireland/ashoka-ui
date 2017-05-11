@@ -11,13 +11,11 @@
   .ant-menu-item-selected, .ant-menu-item-active {
     border-color: $primary-color;
     color: $primary-color;
-    font-weight: $font-weight-heavy;
   }
+
   li.ant-menu-item {
-    top: 4px;
-    font-weight: $font-weight-bold;
-    padding-right: 0;
-    margin-right: $pad;
+    border: 0 !important;
+
     &:hover {
       color: $inactive-color;
       border-bottom: 2px solid transparent;
