@@ -1,4 +1,5 @@
-# ashoka-ui
+![Build](https://travis-ci.org/zalando-ashoka/ashoka-ui.svg?branch=master "Build Status")
+# Ashoka UI
 Ashoka Changemaker App
 
 ## Prerequisites
