@@ -48,6 +48,11 @@ class apiClient {
     return ref.update(data).then(() => (userId));
   }
 
+  getUser = (userId) => {
+    const ref = firebase.database().ref(`${USERS_PATH}/${userId}`);
+    return ref.once('value').then(response => ({ response: response.val() }));
+  }
+
   listUsers = (cursor = null, limit = 10) => {
     const ref = firebase.database().ref(USERS_PATH);
     return ref.orderByChild('firstName')

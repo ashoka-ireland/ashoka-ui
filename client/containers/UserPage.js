@@ -5,6 +5,12 @@ import { actions } from '../reducers/users/actions';
 
 class UserPage extends Component {
 
+  componentWillMount = () => {
+    if (this.props.params.userKey) {
+      this.props.actions.getUser(this.props.params.userKey);
+    }
+  }
+
   render = () => (
     <div>
     </div>
@@ -12,12 +18,17 @@ class UserPage extends Component {
 }
 
 UserPage.propTypes = {
+  user: PropTypes.object,
+  params: PropTypes.shape({
+    userKey: PropTypes.string
+  }),
   actions: PropTypes.shape({
     getUser: PropTypes.func.isRequired
   })
 };
 
-const mapStateToProps = () => ({
+const mapStateToProps = (state) => ({
+  user: state.user
 });
 
 const mapDispatchToProps = (dispatch) => ({

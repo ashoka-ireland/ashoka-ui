@@ -1,16 +1,15 @@
-import { createRequestTypes, action, fetchEntity } from '../actions';
-import client from 'api/client';
+import { createRequestTypes, fetchEntity, createRequestActions } from '../actions';
+import client from 'api/client'; //eslint-disable-line
 
 export const USERS_LIST = createRequestTypes('USERS_LIST');
+export const USER_GET = createRequestTypes('USER_GET');
 
 export const events = {
-  listUsers: {
-    request: (id) => action(USERS_LIST.REQUEST, { id }),
-    success: (id, response) => action(USERS_LIST.SUCCESS, { id, response }),
-    failure: (id, error) => action(USERS_LIST.FAILURE, { id, error })
-  }
+  listUsers: createRequestActions(USERS_LIST),
+  getUser: createRequestActions(USER_GET),
 };
 
 export const actions = {
-  listUsers: (params) => fetchEntity(events.listUsers, client.listUsers, params)
+  listUsers: (params) => fetchEntity(events.listUsers, client.listUsers, params),
+  getUser: (params) => fetchEntity(events.getUser, client.getUser, params)
 };
