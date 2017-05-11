@@ -16,8 +16,6 @@ import { browserHistory } from 'react-router';
 const FormItem = Form.Item;
 const logo = require('assets/img/logo-dark.png');
 
-client.initialize();
-
 const userIcon = <Icon type="user" />;
 const passwordIcon = <Icon type="lock" />;
 

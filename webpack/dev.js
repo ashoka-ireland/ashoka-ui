@@ -7,6 +7,7 @@ const config = require('./base');
 export default Object.assign({}, config, {
   devtool: 'cheap-module-source-map',
   entry: [
+    'babel-polyfill',
     // must be first entry to properly set public path
     path.resolve(__dirname, '../client/webpack-public-path'),
     'webpack-hot-middleware/client?reload=true',

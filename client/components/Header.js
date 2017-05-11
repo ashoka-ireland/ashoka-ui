@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import client from 'api/client';
+import client from 'api/client'; // eslint-disable-line
 import { browserHistory, IndexLink, Link } from 'react-router';
 import { Menu } from 'antd';
 
@@ -7,7 +7,7 @@ const logo = require('assets/img/logo.png');
 
 class Header extends Component {
   logout = () => {
-    client.logout(() => {
+    client.logout().then(() => {
       browserHistory.replace('/login');
     });
   }
@@ -36,6 +36,6 @@ class Header extends Component {
       </header>
     );
   }
-};
+}
 
 export default Header;

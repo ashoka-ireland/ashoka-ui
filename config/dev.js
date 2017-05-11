@@ -12,8 +12,7 @@ const getConfig = (host, port) => {
   const assets = { publicPath: `//${devServer.host}:3000/dist/` };
   const app = {
     appId: constants.STAGING_APP_ID,
-    redirectUri: constants.STAGING_REDIRECT_URI,
-    bucketName: constants.CREDENTIALS_BUCKET_NAME
+    redirectUri: constants.STAGING_REDIRECT_URI
   };
 
   return {

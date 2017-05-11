@@ -8,7 +8,7 @@ const baseConfig = require('./base');
 
 let config = Object.assign({}, baseConfig);
 
-config.entry = path.resolve(__dirname, '../client/index.js');
+config.entry = ['babel-polyfill', path.resolve(__dirname, '../client/index.js')];
 config.devtool = 'source-map';
 
 config.output.filename = '[name].[chunkhash].js';
