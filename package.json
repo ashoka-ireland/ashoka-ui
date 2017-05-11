@@ -60,7 +60,8 @@
     "react-router": "2.8.1",
     "react-router-redux": "4.0.6",
     "redux": "3.6.0",
-    "redux-thunk": "2.1.0"
+    "redux-thunk": "2.1.0",
+    "world-countries": "^1.8.1"
   },
   "devDependencies": {
     "autoprefixer": "6.5.1",
