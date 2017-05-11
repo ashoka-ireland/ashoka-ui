@@ -48,6 +48,7 @@
     "antd": "2.5.2",
     "express": "~4.14.0",
     "express-http-proxy": "~0.10.0",
+    "firebase": "^3.9.0",
     "normalizr": "2.3.0",
     "react": "15.3.2",
     "react-dom": "15.3.2",
