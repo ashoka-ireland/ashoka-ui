@@ -16,6 +16,10 @@
   li.ant-menu-item {
     border: 0 !important;
 
+    a.active {
+      color: $white;
+    }
+
     &:hover {
       color: $inactive-color;
       border-bottom: 2px solid transparent;

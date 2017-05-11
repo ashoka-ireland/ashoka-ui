@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import client from 'api/client'; // eslint-disable-line
 import { browserHistory, IndexLink, Link } from 'react-router';
 import { Menu } from 'antd';
@@ -13,6 +14,8 @@ class Header extends Component {
   }
 
   render() {
+    const { user } = this.props;
+
     return (
       <header className="header">
         <div className="logo">
@@ -21,21 +24,32 @@ class Header extends Component {
 
         <Menu mode="horizontal" theme="dark">
           <Menu.Item key="survey">
-            <Link to="/survey">Survey</Link>
+            <Link activeClassName="active" to="/survey">Survey</Link>
           </Menu.Item>
           <Menu.Item key="users">
-            <Link to="/users">Users</Link>
+            <Link activeClassName="active" to="/users">Users</Link>
           </Menu.Item>
           <Menu.Item key="nominees">
-            <Link to="/">Nominees</Link>
+            <Link activeClassName="active" to="/nominees">Nominees</Link>
           </Menu.Item>
           <Menu.Item key="logout">
             <a type="button" onClick={this.logout}>Logout</a>
           </Menu.Item>
+          {user &&
+          <Menu.Item key="user">
+            <div class="user-dropdown">{user.email}</div>
+          </Menu.Item>}
         </Menu>
       </header>
     );
   }
 }
+
+Header.propTypes = {
+  user: PropTypes.shape({
+    email: PropTypes.string,
+    displayName: PropTypes.string
+  })
+};
 
 export default Header;

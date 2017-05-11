@@ -5,20 +5,23 @@ import { actions } from '../reducers/users/actions';
 import { Table, Button } from 'antd';
 
 const columns = [{
-  title: 'First Name',
-  dataIndex: 'firstName',
-},{
-  title: 'Last Name',
-  dataIndex: 'lastName',
-},{
+  title: 'Name',
+  dataIndex: 'name',
+  render: (text, record) => <a href={`/users/${record.key}`}>{text}</a>
+}, {
   title: 'Email',
   dataIndex: 'email',
+}, {
+  title: 'Phone',
+  dataIndex: 'primaryDialCode'
+}, {
+  title: 'Country',
+  dataIndex: 'countryOfResidence'
 }];
 
 const noop = () => {};
 
 class UsersPage extends Component {
-
   componentWillMount = () => {
     this.props.actions.listUsers();
   }

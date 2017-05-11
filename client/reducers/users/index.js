@@ -7,6 +7,7 @@ export const usersPage = createReducer([], {
     const users = toPairs(action.response);
     return map(users, ([key, user]) => ({
       key,
+      name: `${user.firstName} ${user.lastName}`,
       ...user
     }));
   }
