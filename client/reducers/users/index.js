@@ -11,3 +11,12 @@ export const usersPage = createReducer([], {
     }));
   }
 });
+
+export const user = createReducer({}, {
+  [ActionTypes.USER_GET.REQUEST]: () => {
+    return {};
+  },
+  [ActionTypes.USER_GET.SUCCESS]: (state, action) => {
+    return action.response;
+  }
+});
