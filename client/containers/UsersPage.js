@@ -2,11 +2,13 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actions } from '../reducers/users/actions';
-import { Table, Button } from 'antd';
+import { Link } from 'react-router';
+import { Table } from 'antd';
 
 const columns = [{
   title: 'First Name',
   dataIndex: 'firstName',
+  render: (text, record) => <Link to={`/users/${record.key}`}>{text}</Link>
 },{
   title: 'Last Name',
   dataIndex: 'lastName',
@@ -14,8 +16,6 @@ const columns = [{
   title: 'Email',
   dataIndex: 'email',
 }];
-
-const noop = () => {};
 
 class UsersPage extends Component {
 
@@ -25,11 +25,6 @@ class UsersPage extends Component {
 
   render = () => (
     <div>
-      <div className="table-operations">
-        <Button onClick={noop}>Sort age</Button>
-        <Button onClick={noop}>Clear filters</Button>
-        <Button onClick={noop}>Clear filters and sorters</Button>
-      </div>
       <Table columns={columns} dataSource={this.props.usersPage} />
     </div>
   )

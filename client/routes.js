@@ -11,8 +11,9 @@ import {
   SurveyPage,
   NotFound,
   UsersPage,
-  LoginPage
-} from 'components';
+  LoginPage,
+  UserPage
+} from 'containers';
 
 const isAuthenticated = () => {
   return client.authenticated((user) => {
@@ -30,6 +31,7 @@ export default (
       <IndexRedirect to="users" />
       <Route path="survey" component={SurveyPage} />
       <Route path="users" component={UsersPage} />
+      <Route path="users/:userKey" component={UserPage} />
     </Route>
 
     <Route path="/*" component={NotFound} />
