@@ -1,4 +1,5 @@
 import firebase from 'firebase/app';
+import { omitBy, isUndefined } from 'lodash';
 import 'firebase/auth';
 import 'firebase/database';
 
@@ -36,10 +37,15 @@ class apiClient {
 
   createUser = (userDetails) => {
     const ref = firebase.database().ref();
-    const key = ref.push().key;
+    const userId = ref.push().key;
+    const filteredKeys = omitBy(userDetails, isUndefined);
+
     const data = {};
-    data[`${USERS_PATH}/${key}`] = userDetails;
-    return ref.update(data).then(() => (key));
+    // Specify individual paths here so we don't do a full overwrite
+    Object.keys(filteredKeys).forEach((key) => {
+      data[`${USERS_PATH}/${userId}/${key}`] = filteredKeys[key];
+    });
+    return ref.update(data).then(() => (userId));
   }
 
   listUsers = (cursor = null, limit = 10) => {

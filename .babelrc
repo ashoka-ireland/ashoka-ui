@@ -6,7 +6,8 @@
   ],
   "plugins": [
     "react-html-attrs",
-    ["import", { "libraryName": "antd", "style": "css" }]
+    ["import", { "libraryName": "antd", "style": "css" }],
+    "lodash"
   ],
   "env": {
     "development": {
