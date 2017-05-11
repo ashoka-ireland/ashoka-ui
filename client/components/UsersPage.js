@@ -1,4 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { actions } from '../reducers/users/actions';
 import { Table, Button } from 'antd';
 
 const columns = [{
@@ -25,7 +28,13 @@ for (let i = 0; i < 46; i++) {
 const noop = () => {};
 
 class UsersPage extends Component {
+
+  componentWillMount = () => {
+    this.props.actions.listUsers();
+  }
+
   render() {
+    console.log(this.props.usersPage);
     return (
       <div>
         <div className="table-operations">
@@ -39,4 +48,17 @@ class UsersPage extends Component {
   }
 }
 
-export default UsersPage;
+UsersPage.propTypes = {
+  usersPage: PropTypes.object,
+  actions: PropTypes.shape({
+    listUsers: PropTypes.func.isRequired
+  })
+};
+
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(actions, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UsersPage);
