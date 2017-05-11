@@ -44,7 +44,7 @@ class apiClient {
 
   listUsers = (cursor = null, limit = 10) => {
     const ref = firebase.database().ref(USERS_PATH);
-    return ref.orderByChild('userName')
+    return ref.orderByChild('firstName')
       .startAt(cursor)
       .limitToFirst(limit)
       .once('value')
