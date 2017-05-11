@@ -5,6 +5,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 const config = require('./base');
 
 export default Object.assign({}, config, {
+  devtool: 'cheap-module-source-map',
   entry: [
     // must be first entry to properly set public path
     path.resolve(__dirname, '../client/webpack-public-path'),
@@ -22,7 +23,6 @@ export default Object.assign({}, config, {
       __DEV__: true
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({     // Create HTML file that includes references to bundled CSS and JS.
       template: 'client/index.ejs',
       minify: {

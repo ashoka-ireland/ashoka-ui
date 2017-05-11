@@ -14,7 +14,7 @@ const formItemLayout = {
   },
 };
 
-class Home extends Component {
+class SurveyPage extends Component {
   submit = () => {
     client.initialize();
     client.login('ashokasocialapi@gmail.com', process.env.USER_PASSWORD).then(() => {
@@ -26,12 +26,11 @@ class Home extends Component {
 
   render() {
     return (
-      <div className="home-page">
-        <p className="text-center">
-          <h1>Ashoka Changemaker Questionnaire</h1><br />
-        </p>
-        <hr className="divider"/>
-        <h2 className="slogan"><Progress percent={30}/></h2>
+      <div class="home-page">
+        <h1 class="text-center">Ashoka Changemaker Questionnaire</h1>
+        <br />
+        <hr class="divider"/>
+        <h2 class="slogan"><Progress percent={30}/></h2>
 
 
         <Form>
@@ -101,4 +100,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default SurveyPage;

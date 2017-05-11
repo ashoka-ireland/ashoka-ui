@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import client from 'api/client';
 import PropTypes from 'prop-types';
 import {
+  Alert,
   Form,
   Icon,
   Input,
@@ -10,8 +12,11 @@ import {
   Row,
   Col
 } from 'antd';
+import { browserHistory } from 'react-router';
 const FormItem = Form.Item;
 const logo = require('assets/img/logo-dark.png');
+
+client.initialize();
 
 const userIcon = <Icon type="user" />;
 const passwordIcon = <Icon type="lock" />;
@@ -21,12 +26,40 @@ class LoginPage extends Component {
     super(props);
 
     this.state = {
-      showForgotPassword: true
+      showForgotPassword: false,
+      loginError: null
     };
   }
 
-  handleSubmit() {
-    console.debug('handleSubmit');
+  componentDidMount() {
+    client.authenticated((user) => {
+      if (user) {
+        this.redirect();
+      }
+    });
+  }
+
+  redirect = () => {
+    browserHistory.replace('/');
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+    const { email, password } = event.target;
+
+    client.login(
+      email.value,
+      password.value
+    ).catch((error) => {
+      if (error.code === 'auth/user-not-found') {
+        this.setState({
+          loginError: 'Invalid Email/Password credentials'
+        });
+      }
+    }).then(() => {
+      this.redirect();
+    });
   }
 
   renderForgotPassword() {
@@ -61,17 +94,17 @@ class LoginPage extends Component {
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
         <FormItem>
-          {getFieldDecorator('userName', {
-            rules: [{ required: true, message: 'Please input your username!' }],
+          {getFieldDecorator('email', {
+            rules: [{ required: true, message: 'Please input your email address!' }],
           })(
-            <Input prefix={userIcon} placeholder="Username" />
+            <Input name="email" prefix={userIcon} placeholder="Email Address" />
           )}
         </FormItem>
         <FormItem>
           {getFieldDecorator('password', {
             rules: [{ required: true, message: 'Please input your Password!' }],
           })(
-            <Input prefix={passwordIcon} type="password" placeholder="Password" />
+            <Input name="password" prefix={passwordIcon} type="password" placeholder="Password" />
           )}
         </FormItem>
         <FormItem>
@@ -97,14 +130,27 @@ class LoginPage extends Component {
     );
   }
 
+  dismissError = () => (
+    this.setState({ loginError: null })
+  )
+
   render() {
-    const { showForgotPassword } = this.state;
+    const { showForgotPassword, loginError } = this.state;
 
     return (
       <Row type="flex" style={{ height: '100vh' }} justify="center" align="center">
         <Col style={{ margin: 'auto', maxWidth: 400 }}>
           <img src={logo} alt="Ashoka" class="login-logo" />
           <Card style={{ padding: '1em 2em 0' }}>
+            {loginError ?
+              <Alert
+                message={loginError}
+                type="error"
+                closable
+                onClose={this.dismissError}
+              />
+            : null}
+
             {showForgotPassword ? this.renderForgotPassword() : this.renderLoginForm()}
           </Card>
         </Col>

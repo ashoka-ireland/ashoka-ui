@@ -1,23 +1,36 @@
-import React, { PropTypes } from 'react';
-import Header from 'components/Header';
-import Footer from 'components/Footer';
+import React, { Component, PropTypes } from 'react';
 
-const App = (props) => {
-  return (
-    <div class="app">
-      <Header />
+import {
+  Header,
+  Footer,
+} from 'components';
 
-      <main class="container">
-        {props.children}
-      </main>
+class App extends Component {
+  constructor(props) {
+    super(props);
 
-      <Footer />
-    </div>
-  );
-};
+    this.state = {
+      authenticated: false
+    };
+  }
+
+  render() {
+    return (
+      <div class="app">
+        <Header />
+
+        <main class="container">
+          {this.props.children}
+        </main>
+
+        <Footer />
+      </div>
+    );
+  }
+}
 
 App.propTypes = {
-  children: PropTypes.element
+  children: PropTypes.node
 };
 
 export default App;

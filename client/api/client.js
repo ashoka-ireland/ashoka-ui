@@ -13,11 +13,20 @@ const config = {
 
 class apiClient {
   static initialize = () => {
-    return firebase.initializeApp(config);
+    firebase.initializeApp(config);
+    return this;
+  }
+
+  static authenticated = (callback) => {
+    return firebase.auth().onAuthStateChanged(callback);
   }
 
   static login = (email, password) => {
     return firebase.auth().signInWithEmailAndPassword(email, password);
+  }
+
+  static logout = (callback) => {
+    return firebase.auth().logout(callback);
   }
 
   static createUser = (userDetails) => {
