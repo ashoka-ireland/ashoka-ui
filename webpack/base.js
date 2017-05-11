@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const webpack = require('webpack');
 
 const getDirectories = filePath => {
   return fs.readdirSync(filePath).filter(file => {
@@ -36,10 +36,9 @@ module.exports = {
     filename: 'bundle.js'
   },
   plugins: [
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'disabled',
-      openAnalyzer: false,
-      generateStatsFile: true
+    new webpack.DefinePlugin({
+      'process.env.API_KEY': JSON.stringify(process.env.API_KEY),
+      'process.env.USER_PASSWORD': JSON.stringify(process.env.USER_PASSWORD),
     }),
   ],
   module: {
