@@ -29,6 +29,6 @@ export const user = createReducer({}, {
     return {};
   },
   [ActionTypes.USER_GET.SUCCESS]: (state, action) => {
-    return action.response;
+    return { ...action.response, key: action.id };
   }
 });

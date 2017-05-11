@@ -60,14 +60,20 @@ class apiClient {
 
   createUser = (details) => {
     const ref = firebase.database().ref();
-    const userId = ref.push().key;
-    const profileId = ref.push().key;
-
-    const data = {
-      ...userValues(details, userId),
-      ...surveyValues(details, userId, profileId)
-    };
-
+    let data;
+    let userId;
+    if(details.hasOwnProperty('key')) {
+      const { key, ...userDetails } = details; // eslint-disable-line
+      userId = key;
+      data = userValues(userDetails, userId);
+    } else {
+      const profileId = ref.push().key;
+      userId = ref.push().key;
+      data = {
+        ...userValues(details, userId),
+        ...surveyValues(details, userId, profileId)
+      };
+    }
     return ref.update(data).then(() => (userId));
   }
 

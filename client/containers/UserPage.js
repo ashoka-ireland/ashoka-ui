@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { mapValues } from 'lodash';
+import client from '../api/client';
 import { actions } from '../reducers/users/actions';
 import { UserForm } from '../components';
 
@@ -18,7 +19,8 @@ class UserPage extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log(values);
+        const updatedUser = Object.assign({}, this.props.user, values);
+        client.createUser(updatedUser);
       }
     });
   }

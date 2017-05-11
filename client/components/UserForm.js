@@ -59,8 +59,7 @@ const UserForm = ({ formItemLayout, form }) => {
       >
       { getFieldDecorator(constants.PRIMARY_DIAL_CODE, {
         rules: [
-          { required: true, message: 'Please input a primary phone number' },
-          { type: 'number', message: 'Please enter a number' }
+          { required: true, message: 'Please input a primary phone number' }
         ],
       })(
           <Input addonBefore="+353"/>
