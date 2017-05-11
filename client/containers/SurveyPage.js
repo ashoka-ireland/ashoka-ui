@@ -4,7 +4,7 @@ const FormItem = Form.Item;
 
 const RadioGroup = Radio.Group;
 import client from '../api/client';
-
+import * as constants from '../api/constants';
 
 const formItemLayout = {
   labelCol: {
@@ -57,7 +57,7 @@ class SurveyPage extends Component {
           <FormItem
             {...formItemLayout}
             label="First Name">
-            { getFieldDecorator('firstName')(
+            { getFieldDecorator(constants.FIRST_NAME)(
                 <Input placeholder="First Name" />
               )
             }
@@ -67,7 +67,7 @@ class SurveyPage extends Component {
           {...formItemLayout}
           label="Surname"
         >
-          { getFieldDecorator('lastName')(
+          { getFieldDecorator(constants.LAST_NAME)(
               <Input placeholder="Surname"/>
             )
           }
@@ -77,7 +77,7 @@ class SurveyPage extends Component {
           {...formItemLayout}
           label="Email"
         >
-          { getFieldDecorator('email')(
+          { getFieldDecorator(constants.EMAIL)(
               <Input placeholder="Email"/>
             )
           }
@@ -87,7 +87,7 @@ class SurveyPage extends Component {
             {...formItemLayout}
             label="Primary Phone Number"
           >
-          { getFieldDecorator('primaryDialCode')(
+          { getFieldDecorator(constants.PRIMARY_DIAL_CODE)(
               <Input addonBefore="+353"/>
             )
           }
@@ -97,7 +97,7 @@ class SurveyPage extends Component {
               {...formItemLayout}
               label="Secondary Phone Number"
             >
-            { getFieldDecorator('secondaryDialCode')(
+            { getFieldDecorator(constants.SECONDARY_DIAL_CODE)(
                 <Input addonBefore="+353"/>
               )
             }
@@ -107,12 +107,12 @@ class SurveyPage extends Component {
               {...formItemLayout}
               label="Website"
             >
-              { getFieldDecorator('website1')(
+              { getFieldDecorator(constants.WEBSITE_1)(
                   <Input placeholder="Website 1"/>
                 )
               }
               <p>
-                { getFieldDecorator('website2')(
+                { getFieldDecorator(constants.WEBSITE_2)(
                     <Input placeholder="Website 2"/>
                   )
                 }
@@ -124,7 +124,7 @@ class SurveyPage extends Component {
               {...formItemLayout}
               label="Twitter Username"
             >
-              { getFieldDecorator('twitterHandle')(
+              { getFieldDecorator(constants.TWITTER_HANDLE)(
                   <Input addonBefore="@"/>
                 )
               }
@@ -135,7 +135,7 @@ class SurveyPage extends Component {
               {...formItemLayout}
               label="Facebook Profile"
             >
-              { getFieldDecorator('facebookProfile')(
+              { getFieldDecorator(constants.FACEBOOK_PROFILE)(
                   <Input placeholder="Facebook Profile"/>
                 )
               }
@@ -146,7 +146,7 @@ class SurveyPage extends Component {
               {...formItemLayout}
               label="Gender"
             >
-              { getFieldDecorator('gender')(
+              { getFieldDecorator(constants.GENDER)(
                   <Select placeholder="Select a gender">
                     <Option value="male">Male</Option>
                     <Option value="female">Female</Option>
@@ -167,7 +167,7 @@ class SurveyPage extends Component {
               {...formItemLayout}
               label="What is Your Nationality?"
             >
-              { getFieldDecorator('nationality')(
+              { getFieldDecorator(constants.NATIONALITY)(
                 <Select placeholder="Select a nationality">
                   <Option value="Irish">Irish</Option>
                   <Option value="Northern Irish">Northern Irish</Option>
@@ -376,7 +376,7 @@ class SurveyPage extends Component {
               {...formItemLayout}
               label="In which country do you live?"
             >
-              { getFieldDecorator('countryOfResidence')(
+              { getFieldDecorator(constants.COUNTRY_OF_RESIDENCE)(
                 <Select placeholder="Select a country">
                   <Option value="Republic of Ireland">Republic of Ireland</Option>
                   <Option value="Northern Ireland">Northern Ireland</Option>
@@ -637,51 +637,58 @@ class SurveyPage extends Component {
               {...formItemLayout}
               label="Do you work from an office or home?"
             >
-              <Select placeholder="Select place of work">
-                <Option value="office">Office</Option>
-                <Option value="home">Home</Option>
-              </Select>
+              { getFieldDecorator(constants.PLACE_OF_WORK)(
+                  <Select placeholder="Select place of work">
+                    <Option value="office">Office</Option>
+                    <Option value="home">Home</Option>
+                  </Select>
+                )
+              }
             </FormItem>
 
             <FormItem
               {...formItemLayout}
               label="(If office) Office Location"
             >
-              <Select placeholder="Select location of office">
-                <Option value="Antrim">Antrim</Option>
-                <Option value="Armagh">Armagh</Option>
-                <Option value="Carlow">Carlow</Option>
-                <Option value="Cavan">Cavan</Option>
-                <Option value="Clare">Clare</Option>
-                <Option value="Cork">Cork</Option>
-                <Option value="Derry">Derry</Option>
-                <Option value="Donegal">Donegal</Option>
-                <Option value="Down">Down</Option>
-                <Option value="Dublin">Dublin</Option>
-                <Option value="Fermanagh">Fermanagh</Option>
-                <Option value="Galway">Galway</Option>
-                <Option value="Kerry">Kerry</Option>
-                <Option value="Kildare">Kildare</Option>
-                <Option value="Kilkenny">Kilkenny</Option>
-                <Option value="Laois">Laois</Option>
-                <Option value="Leitrim">Leitrim</Option>
-                <Option value="Limerick">Limerick</Option>
-                <Option value="Longford">Longford</Option>
-                <Option value="Louth">Louth</Option>
-                <Option value="Mayo">Mayo</Option>
-                <Option value="Meath">Meath</Option>
-                <Option value="Monaghan">Monaghan</Option>
-                <Option value="Offaly">Offaly</Option>
-                <Option value="Roscommon">Roscommon</Option>
-                <Option value="Sligo">Sligo</Option>
-                <Option value="Tipperary">Tipperary</Option>
-                <Option value="Tyrone">Tyrone</Option>
-                <Option value="Waterford">Waterford</Option>
-                <Option value="Westmeath">Westmeath</Option>
-                <Option value="Wexford">Wexford</Option>
-                <Option value="Wicklow">Wicklow</Option>
-              </Select>
-            </FormItem>
+              { getFieldDecorator(constants.OFFICE_LOCATION)(
+                <Select placeholder="Select location of office">
+                  <Option value="Antrim">Antrim</Option>
+                  <Option value="Armagh">Armagh</Option>
+                  <Option value="Carlow">Carlow</Option>
+                  <Option value="Cavan">Cavan</Option>
+                  <Option value="Clare">Clare</Option>
+                  <Option value="Cork">Cork</Option>
+                  <Option value="Derry">Derry</Option>
+                  <Option value="Donegal">Donegal</Option>
+                  <Option value="Down">Down</Option>
+                  <Option value="Dublin">Dublin</Option>
+                  <Option value="Fermanagh">Fermanagh</Option>
+                  <Option value="Galway">Galway</Option>
+                  <Option value="Kerry">Kerry</Option>
+                  <Option value="Kildare">Kildare</Option>
+                  <Option value="Kilkenny">Kilkenny</Option>
+                  <Option value="Laois">Laois</Option>
+                  <Option value="Leitrim">Leitrim</Option>
+                  <Option value="Limerick">Limerick</Option>
+                  <Option value="Longford">Longford</Option>
+                  <Option value="Louth">Louth</Option>
+                  <Option value="Mayo">Mayo</Option>
+                  <Option value="Meath">Meath</Option>
+                  <Option value="Monaghan">Monaghan</Option>
+                  <Option value="Offaly">Offaly</Option>
+                  <Option value="Roscommon">Roscommon</Option>
+                  <Option value="Sligo">Sligo</Option>
+                  <Option value="Tipperary">Tipperary</Option>
+                  <Option value="Tyrone">Tyrone</Option>
+                  <Option value="Waterford">Waterford</Option>
+                  <Option value="Westmeath">Westmeath</Option>
+                  <Option value="Wexford">Wexford</Option>
+                  <Option value="Wicklow">Wicklow</Option>
+                </Select>
+                )
+              }
+              </FormItem>
+
 
             <h2>Section 2 - About Your Work</h2>
             <hr className="divider secondary" />
@@ -689,29 +696,38 @@ class SurveyPage extends Component {
             <FormItem
               label="You've been nominated as a Changemaker in Ireland. Which organisation/s are you involved in to deliver social change?"
             >
-              <Select placeholder="Select an organisation" onChange={this.onSelectOrg}>
-                <Option value="Organisation 1" key="Organisation 1">Oranistaion 1</Option>
-                <Option value="Organisation 2" key="Organisation 2">Organisation 2</Option>
-                <Option value="Organisation 3" key="Organisation 3">Organisation 3</Option>
-                <Option value="Organisation 4" key="Organisation 4">Organisation 4</Option>
-              </Select>
+              { getFieldDecorator(constants.ORGANISATION)(
+                  <Select placeholder="Select an organisation" onChange={this.onSelectOrg}>
+                    <Option value="Organisation 1" key="Organisation 1">Oranistaion 1</Option>
+                    <Option value="Organisation 2" key="Organisation 2">Organisation 2</Option>
+                    <Option value="Organisation 3" key="Organisation 3">Organisation 3</Option>
+                    <Option value="Organisation 4" key="Organisation 4">Organisation 4</Option>
+                  </Select>
+                )
+              }
             </FormItem>
 
             <FormItem
               {...formItemLayout}
               label={`Are you a founder of (${this.state.organisation})?`}
             >
-            <RadioGroup>
-              <Radio value="Yes">Yes</Radio>
-              <Radio value="No">No</Radio>
-            </RadioGroup>
+            { getFieldDecorator(constants.ORGANISATION_FOUNDER)(
+                <RadioGroup>
+                  <Radio value="Yes">Yes</Radio>
+                  <Radio value="No">No</Radio>
+                </RadioGroup>
+              )
+            }
             </FormItem>
 
             <FormItem
               {...formItemLayout}
               label={`What is your job title in (${this.state.organisation})?`}
             >
-            <Input placeholder="Job Title" />
+            { getFieldDecorator(constants.JOB_TITLE)(
+                <Input placeholder="Job Title" />
+              )
+            }
 
           </FormItem>
 
@@ -719,74 +735,101 @@ class SurveyPage extends Component {
             {...formItemLayout}
             label={`Year ${this.state.organisation} was founded`}
           >
-            <InputNumber defaultValue={currentYear} min={1900} max={currentYear} />
+            { getFieldDecorator(constants.YEAR_FOUNDED)(
+                <InputNumber defaultValue={currentYear} min={1900} max={currentYear} />
+              )
+            }
           </FormItem>
 
           <FormItem
             label={`Which of these sectors does (${this.state.organisation}) operate in?`}
           >
-            <Select placeholder="Select a sector">
-              <Option value="Protecting & Preserving the Planet">Protecting & Preserving the Planet</Option>
-              <Option value="Social Inclusion">Social Inclusion</Option>
-              <Option value="Physical & Mental Well-being">Physical & Mental Well-being</Option>
-              <Option value="Educating & Developing Skills">Educating & Developing Skills</Option>
-              <Option value="Human Rights">Human Rights</Option>
-            </Select>
+            { getFieldDecorator(constants.ORGANISATION_SECTOR)(
+                <Select placeholder="Select a sector">
+                  <Option value="Protecting & Preserving the Planet">Protecting & Preserving the Planet</Option>
+                  <Option value="Social Inclusion">Social Inclusion</Option>
+                  <Option value="Physical & Mental Well-being">Physical & Mental Well-being</Option>
+                  <Option value="Educating & Developing Skills">Educating & Developing Skills</Option>
+                  <Option value="Human Rights">Human Rights</Option>
+                </Select>
+              )
+            }
           </FormItem>
 
           <FormItem
             label="(If multi) Which would you say is your primary sector in which you operate?"
           >
-            <Select placeholder="Select a sector">
-              <Option value="Protecting & Preserving the Planet">Protecting & Preserving the Planet</Option>
-              <Option value="Social Inclusion">Social Inclusion</Option>
-              <Option value="Physical & Mental Well-being">Physical & Mental Well-being</Option>
-              <Option value="Educating & Developing Skills">Educating & Developing Skills</Option>
-              <Option value="Human Rights">Human Rights</Option>
-            </Select>
+            { getFieldDecorator(constants.USER_SECTOR)(
+                <Select placeholder="Select a sector">
+                  <Option value="Protecting & Preserving the Planet">Protecting & Preserving the Planet</Option>
+                  <Option value="Social Inclusion">Social Inclusion</Option>
+                  <Option value="Physical & Mental Well-being">Physical & Mental Well-being</Option>
+                  <Option value="Educating & Developing Skills">Educating & Developing Skills</Option>
+                  <Option value="Human Rights">Human Rights</Option>
+                </Select>
+              )
+            }
           </FormItem>
 
           <FormItem
             label="How would you describe what you do in short (1-2 sentences)?"
           >
-            <Input type="textarea" rows={4} />
+            { getFieldDecorator(constants.DUTIES)(
+                <Input type="textarea" rows={4}/>
+              )
+            }
           </FormItem>
 
           <FormItem
             label="Why did you start this work (1-2 sentences) ?"
           >
-            <Input type="textarea" rows={4} />
+            { getFieldDecorator(constants.REASON_FOR_FIELD_OF_WORK)(
+                <Input type="textarea" rows={4}/>
+              )
+            }
           </FormItem>
 
           <FormItem
             {...formItemLayout}
             label="Current number of full time paid staff"
           >
-            <InputNumber defaultValue="0" />
+            { getFieldDecorator(constants.NUM_FULL_TIME_STAFF)(
+                <InputNumber defaultValue="0"/>
+              )
+            }
           </FormItem>
 
           <FormItem
             {...formItemLayout}
-            label="Current number of prestart time paid staff"
+            label="Current number of part time paid staff"
           >
-            <InputNumber defaultValue="0" />
+            { getFieldDecorator(constants.NUM_PART_TIME_STAFF)(
+                <InputNumber defaultValue="0"/>
+              )
+            }
           </FormItem>
 
           <FormItem
             {...formItemLayout}
             label="Current number of volunteers (per year)"
           >
-            <InputNumber defaultValue="0" />
+            { getFieldDecorator(constants.NUM_VOLUNTEERS)(
+                <InputNumber defaultValue="0"/>
+              )
+            }
           </FormItem>
 
           <FormItem
             label={`Which of these sources of founding does (${this.state.organisation}) have?`}
           >
-            <Select placeholder="Select a sector">
-              <Option value="Earned Revenue">Earned Revenue</Option>
-              <Option value="Public Funding">Public Funding</Option>
-              <Option value="Philanthropy">Philanthropy</Option>
-            </Select>
+            { getFieldDecorator(constants.SOURCES_OF_FUNDING)(
+                <Select placeholder="Select a sector">
+                  <Option value="Earned Revenue">Earned Revenue</Option>
+                  <Option value="Public Funding">Public Funding</Option>
+                  <Option value="Philanthropy">Philanthropy</Option>
+                </Select>
+              )
+            }
           </FormItem>
 
           <hr className="divider secondary" />
