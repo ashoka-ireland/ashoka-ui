@@ -1,4 +1,6 @@
-import * as firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
 
 const USERS_PATH = '/users';
 
@@ -12,21 +14,29 @@ const config = {
 };
 
 class apiClient {
-  static initialize = () => {
-    return firebase.initializeApp(config);
+  constructor() {
+    firebase.initializeApp(config);
   }
 
-  static login = (email, password) => {
+  login = (email, password) => {
     return firebase.auth().signInWithEmailAndPassword(email, password);
   }
 
-  static createUser = (userDetails) => {
+  createUser = (userDetails) => {
     const ref = firebase.database().ref();
     const key = ref.push().key;
     const data = {};
     data[`${USERS_PATH}/${key}`] = userDetails;
     return ref.update(data).then(() => (key));
   }
+
+  listUsers = (cursor = null, limit = 10) => {
+    const ref = firebase.database().ref(USERS_PATH);
+    return ref.orderByChild('userName')
+      .startAt(cursor)
+      .limitToFirst(limit);
+  }
 }
 
-export default apiClient;
+const client = new apiClient();
+export default client;

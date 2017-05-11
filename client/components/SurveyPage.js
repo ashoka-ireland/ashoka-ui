@@ -16,7 +16,6 @@ const formItemLayout = {
 
 class Home extends Component {
   submit = () => {
-    client.initialize();
     client.login('ashokasocialapi@gmail.com', process.env.USER_PASSWORD).then(() => {
       client.createUser({
         foo: 'bar'
