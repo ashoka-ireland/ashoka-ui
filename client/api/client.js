@@ -1,17 +1,40 @@
 import firebase from 'firebase/app';
 import { omitBy, isUndefined, lowerCase } from 'lodash';
+import * as constants from './constants';
 import 'firebase/auth';
 import 'firebase/database';
 
 const USERS_PATH = '/users';
+const SURVEYS_PATH = '/surveys';
 
 const config = {
-  apiKey: process.env.API_KEY,
+  apiKey: 'AIzaSyCQnvhtra0swrYaGvwSFiavtkKwdwSQd6g',
   authDomain: 'ashoka-social-api.firebaseapp.com',
   databaseURL: 'https://ashoka-social-api.firebaseio.com',
   projectId: 'ashoka-social-api',
   storageBucket: 'ashoka-social-api.appspot.com',
   messagingSenderId: '374901402447'
+};
+
+const userValues = (availableValues, userId) => {
+  const data = {};
+  constants.USER_VALUES.forEach((value) => {
+    data[`${USERS_PATH}/${userId}/${value}`] = availableValues[value];
+  });
+  data[`${USERS_PATH}/${userId}/id`] = userId;
+  data[`${USERS_PATH}/${userId}/sortName`] = lowerCase(
+    `${availableValues.firstName} ${availableValues.lastName}`
+  );
+  return omitBy(data, isUndefined);
+};
+
+const surveyValues = (availableValues, userId, profileId) => {
+  const data = {};
+  constants.SURVEY_VALUES.forEach((value) => {
+    data[`${SURVEYS_PATH}/${profileId}/${value}`] = availableValues[value];
+  });
+  data[`${SURVEYS_PATH}/${profileId}/userId`] = userId;
+  return omitBy(data, isUndefined);
 };
 
 class apiClient {
@@ -35,23 +58,22 @@ class apiClient {
     return firebase.auth().sendPasswordResetEmail(email);
   }
 
-  createUser = (userDetails) => {
+  createUser = (details) => {
     const ref = firebase.database().ref();
     const userId = ref.push().key;
-    const filteredKeys = omitBy(userDetails, isUndefined);
+    const profileId = ref.push().key;
 
-    const data = {};
-    // Specify individual paths here so we don't do a full overwrite
-    Object.keys(filteredKeys).forEach((key) => {
-      data[`${USERS_PATH}/${userId}/${key}`] = filteredKeys[key];
-    });
-
-    // Store the full name in lowercase, for search
-    data[`${USERS_PATH}/${userId}/sortName`] = lowerCase(
-      `${filteredKeys.firstName} ${filteredKeys.lastName}`
-    );
+    const data = {
+      ...userValues(details, userId),
+      ...surveyValues(details, userId, profileId)
+    };
 
     return ref.update(data).then(() => (userId));
+  }
+
+  getUser = (userId) => {
+    const ref = firebase.database().ref(`${USERS_PATH}/${userId}`);
+    return ref.once('value').then(response => ({ response: response.val() }));
   }
 
   listUsers = (cursor = null, limit = 10) => {

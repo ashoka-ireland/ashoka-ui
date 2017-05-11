@@ -15,6 +15,12 @@ export const action = (type, body) => {
   return { type, ...payload };
 };
 
+export const createRequestActions = (actionType) => ({
+  request: (id) => action(actionType.REQUEST, { id }),
+  success: (id, response) => action(actionType.SUCCESS, { id, response }),
+  failure: (id, error) => action(actionType.FAILURE, { id, error })
+});
+
 // resuable fetch Subroutine
 // entity : topic | ...
 // apiFn  : api.fetchUser | api.fetchRepo | ...
