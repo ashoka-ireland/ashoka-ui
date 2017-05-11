@@ -6,7 +6,7 @@ import 'firebase/database';
 const USERS_PATH = '/users';
 
 const config = {
-  apiKey: process.env.API_KEY,
+  apiKey: "AIzaSyCQnvhtra0swrYaGvwSFiavtkKwdwSQd6g",
   authDomain: 'ashoka-social-api.firebaseapp.com',
   databaseURL: 'https://ashoka-social-api.firebaseio.com',
   projectId: 'ashoka-social-api',
