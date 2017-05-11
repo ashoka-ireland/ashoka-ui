@@ -1,7 +1,10 @@
+import { Form, Button } from 'antd';
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { mapValues } from 'lodash';
 import { actions } from '../reducers/users/actions';
+import { UserForm } from '../components';
 
 class UserPage extends Component {
 
@@ -11,8 +14,31 @@ class UserPage extends Component {
     }
   }
 
+  submit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log(values);
+      }
+    });
+  }
+
   render = () => (
-    <div>
+    <div className="user-page">
+      <Form>
+        <hr className="divider secondary" />
+
+        <UserForm form={this.props.form} />
+
+        <hr className="divider secondary" />
+
+        <Button type="primary"
+                htmlType="submit"
+                onClick={this.submit}
+                size="large">
+          Submit
+        </Button>
+      </Form>
     </div>
   )
 }
@@ -35,4 +61,6 @@ const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators(actions, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserPage);
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create({
+  mapPropsToFields: (props) => mapValues(props.user, (value) => ({ value }))
+})(UserPage));
