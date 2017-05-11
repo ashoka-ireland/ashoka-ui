@@ -1,5 +1,5 @@
 import firebase from 'firebase/app';
-import { omitBy, isUndefined } from 'lodash';
+import { omitBy, isUndefined, lowerCase } from 'lodash';
 import * as constants from './constants';
 import 'firebase/auth';
 import 'firebase/database';
@@ -8,7 +8,7 @@ const USERS_PATH = '/users';
 const SURVEYS_PATH = '/surveys';
 
 const config = {
-  apiKey: "AIzaSyCQnvhtra0swrYaGvwSFiavtkKwdwSQd6g",
+  apiKey: 'AIzaSyCQnvhtra0swrYaGvwSFiavtkKwdwSQd6g',
   authDomain: 'ashoka-social-api.firebaseapp.com',
   databaseURL: 'https://ashoka-social-api.firebaseio.com',
   projectId: 'ashoka-social-api',
@@ -22,6 +22,9 @@ const userValues = (availableValues, userId) => {
     data[`${USERS_PATH}/${userId}/${value}`] = availableValues[value];
   });
   data[`${USERS_PATH}/${userId}/id`] = userId;
+  data[`${USERS_PATH}/${userId}/sortName`] = lowerCase(
+    `${availableValues.firstName} ${availableValues.lastName}`
+  );
   return omitBy(data, isUndefined);
 };
 
@@ -78,6 +81,21 @@ class apiClient {
     return ref.orderByChild('firstName')
       .startAt(cursor)
       .limitToFirst(limit)
+      .once('value')
+      .then(response => ({ response: response.val() }));
+  }
+
+  searchUsers = (query) => {
+    const ref = firebase.database().ref(USERS_PATH);
+
+    if (!query) {
+      return Promise.resolve({ response: [] });
+    }
+
+    return ref
+      .orderByChild('sortName')
+      .startAt(query)
+      .endAt(`${query}\u{f8ff}`)
       .once('value')
       .then(response => ({ response: response.val() }));
   }

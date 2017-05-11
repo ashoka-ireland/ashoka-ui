@@ -7,6 +7,18 @@ export const usersPage = createReducer([], {
     const users = toPairs(action.response);
     return map(users, ([key, user]) => ({
       key,
+      name: `${user.firstName} ${user.lastName}`,
+      ...user
+    }));
+  }
+});
+
+export const usersSearchResults = createReducer([], {
+  [ActionTypes.USERS_SEARCH.SUCCESS]: (state, action) => {
+    const users = toPairs(action.response);
+    return map(users, ([key, user]) => ({
+      key,
+      name: `${user.firstName} ${user.lastName}`,
       ...user
     }));
   }
