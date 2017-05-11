@@ -7,7 +7,6 @@ import {
   Icon,
   Input,
   Button,
-  Checkbox,
   Card,
   Row,
   Col
@@ -25,7 +24,8 @@ class LoginPage extends Component {
 
     this.state = {
       showForgotPassword: false,
-      loginError: null
+      loginError: null,
+      successMessage: null
     };
   }
 
@@ -60,25 +60,41 @@ class LoginPage extends Component {
     });
   }
 
+  handlePasswordReset = (event) => {
+    event.preventDefault();
+
+    const { email } = event.target;
+
+    client.requestPasswordReset(email.value)
+      .then(() => {
+        this.setState({
+          successMessage: 'An email has been sent to you with instructions to reset your password.',
+          showForgotPassword: false
+        });
+      }, (error) => {
+        throw error;
+      });
+  }
+
   renderForgotPassword() {
     const { getFieldDecorator } = this.props.form;
 
     return (
       <div>
         <a type="button" onClick={() =>  (this.setState({ showForgotPassword: false }))}>
-          Back to Login
+          <Icon type="arrow-left" /> Back to Login
         </a>
-        <Form onSubmit={this.handleSubmit} className="login-form">
+        <Form onSubmit={this.handlePasswordReset} class="login-form">
           <FormItem>
             {getFieldDecorator('emailAddress', {
               rules: [{ required: true, message: 'Please input your email address!' }],
             })(
-              <Input prefix={userIcon} placeholder="Email Address..." />
+              <Input name="email" prefix={userIcon} placeholder="Email Address..." />
             )}
           </FormItem>
           <FormItem>
             <Button type="primary" htmlType="submit" className="login-form-button">
-              Send
+              Request New Password
             </Button>
           </FormItem>
         </Form>
@@ -106,12 +122,6 @@ class LoginPage extends Component {
           )}
         </FormItem>
         <FormItem>
-          {getFieldDecorator('remember', {
-            valuePropName: 'checked',
-            initialValue: true,
-          })(
-            <Checkbox>Remember me</Checkbox>
-          )}
           <a
             type="button"
             class="login-form-forgot"
@@ -128,16 +138,16 @@ class LoginPage extends Component {
     );
   }
 
-  dismissError = () => (
-    this.setState({ loginError: null })
+  dismissAlert = (type) => (
+    this.setState({ [type]: null })
   )
 
   render() {
-    const { showForgotPassword, loginError } = this.state;
+    const { showForgotPassword, loginError, successMessage } = this.state;
 
     return (
       <Row type="flex" style={{ height: '100vh' }} justify="center" align="center">
-        <Col style={{ margin: 'auto', maxWidth: 400 }}>
+        <Col style={{ margin: 'auto', width: 400 }}>
           <img src={logo} alt="Ashoka" class="login-logo" />
           <Card style={{ padding: '1em 2em 0' }}>
             {loginError ?
@@ -145,7 +155,16 @@ class LoginPage extends Component {
                 message={loginError}
                 type="error"
                 closable
-                onClose={this.dismissError}
+                onClose={() => this.dismissError('loginError')}
+              />
+            : null}
+
+            {successMessage ?
+              <Alert
+                message={successMessage}
+                type="success"
+                closable
+                onClose={() => this.dismissAlert('successMessage')}
               />
             : null}
 

@@ -30,6 +30,10 @@ class apiClient {
     return firebase.auth().signOut();
   }
 
+  requestPasswordReset = (email) => {
+    return firebase.auth().sendPasswordResetEmail(email);
+  }
+
   createUser = (userDetails) => {
     const ref = firebase.database().ref();
     const key = ref.push().key;

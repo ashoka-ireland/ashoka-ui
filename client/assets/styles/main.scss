@@ -23,7 +23,9 @@ html, body {
 }
 
 a[type='button'] {
+  display: block;
   appearance: none;
+  padding: 1em 0;
 }
 
 // ANTD
