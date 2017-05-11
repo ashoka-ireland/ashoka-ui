@@ -1,5 +1,5 @@
 import firebase from 'firebase/app';
-import { omitBy, isUndefined } from 'lodash';
+import { omitBy, isUndefined, lowerCase } from 'lodash';
 import 'firebase/auth';
 import 'firebase/database';
 
@@ -45,6 +45,12 @@ class apiClient {
     Object.keys(filteredKeys).forEach((key) => {
       data[`${USERS_PATH}/${userId}/${key}`] = filteredKeys[key];
     });
+
+    // Store the full name in lowercase, for search
+    data[`${USERS_PATH}/${userId}/sortName`] = lowerCase(
+      `${filteredKeys.firstName} ${filteredKeys.lastName}`
+    );
+
     return ref.update(data).then(() => (userId));
   }
 
@@ -53,6 +59,21 @@ class apiClient {
     return ref.orderByChild('firstName')
       .startAt(cursor)
       .limitToFirst(limit)
+      .once('value')
+      .then(response => ({ response: response.val() }));
+  }
+
+  searchUsers = (query) => {
+    const ref = firebase.database().ref(USERS_PATH);
+
+    if (!query) {
+      return Promise.resolve({ response: [] });
+    }
+
+    return ref
+      .orderByChild('sortName')
+      .startAt(query)
+      .endAt(`${query}\u{f8ff}`)
       .once('value')
       .then(response => ({ response: response.val() }));
   }
