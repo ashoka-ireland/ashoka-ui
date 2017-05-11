@@ -35,9 +35,7 @@ class SurveyPage extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        client.login('ashokasocialapi@gmail.com', process.env.USER_PASSWORD).then(() => {
-          client.createUser(values);
-        });
+        client.createUser(values);
       }
     });
   }
