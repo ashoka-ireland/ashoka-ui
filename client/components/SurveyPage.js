@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Input, Progress, Checkbox, Button, Select, DatePicker } from 'antd';
 const FormItem = Form.Item;
-import client from '../api/client';
+import client from 'api/client'; // eslint-disable-line
 
 const formItemLayout = {
   labelCol: {
@@ -16,7 +16,7 @@ const formItemLayout = {
 
 const MonthPicker = DatePicker.MonthPicker;
 
-class Home extends Component {
+class SurveyPage extends Component {
   submit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -31,12 +31,11 @@ class Home extends Component {
   render() {
     const {getFieldDecorator} = this.props.form;
     return (
-      <div className="home-page">
-        <p className="text-center">
-          <h1>Ashoka Changemaker Questionnaire</h1><br />
-        </p>
-        <hr className="divider"/>
-        <h2 className="slogan"><Progress percent={30}/></h2>
+      <div class="home-page">
+        <h1 class="text-center">Ashoka Changemaker Questionnaire</h1>
+        <br />
+        <hr class="divider"/>
+        <h2 class="slogan"><Progress percent={30}/></h2>
 
 
         <Form>
@@ -633,4 +632,4 @@ class Home extends Component {
   }
 }
 
-export default Form.create()(Home);
+export default Form.create()(SurveyPage);

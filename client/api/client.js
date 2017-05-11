@@ -18,8 +18,20 @@ class apiClient {
     firebase.initializeApp(config);
   }
 
+  authenticated = (callback) => {
+    return firebase.auth().onAuthStateChanged(callback);
+  }
+
   login = (email, password) => {
     return firebase.auth().signInWithEmailAndPassword(email, password);
+  }
+
+  logout = () => {
+    return firebase.auth().signOut();
+  }
+
+  requestPasswordReset = (email) => {
+    return firebase.auth().sendPasswordResetEmail(email);
   }
 
   createUser = (userDetails) => {
@@ -41,4 +53,5 @@ class apiClient {
 }
 
 const client = new apiClient();
+
 export default client;

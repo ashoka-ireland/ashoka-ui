@@ -1,6 +1,5 @@
 const path = require('path');
 const fs = require('fs');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const webpack = require('webpack');
 
 const getDirectories = filePath => {
@@ -17,9 +16,6 @@ const aliases = packages.reduce( (reducer, name) => {
 }, {
   breakpoint: 'node_modules/breakpoint-sass/stylesheets/_breakpoint'
 });
-
-console.log('--------');
-console.log(process.env.API_KEY);
 
 module.exports = {
   resolve: {
@@ -40,11 +36,6 @@ module.exports = {
     filename: 'bundle.js'
   },
   plugins: [
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'disabled',
-      openAnalyzer: false,
-      generateStatsFile: true
-    }),
     new webpack.DefinePlugin({
       'process.env.API_KEY': JSON.stringify(process.env.API_KEY),
       'process.env.USER_PASSWORD': JSON.stringify(process.env.USER_PASSWORD),

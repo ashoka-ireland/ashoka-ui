@@ -4,8 +4,8 @@ import React from 'react';
 import {render} from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
-import enUS from "antd/lib/locale-provider/en_US";
-import { LocaleProvider } from "antd";
+import enUS from 'antd/lib/locale-provider/en_US';
+import { LocaleProvider } from 'antd';
 import routes from './routes';
 import configureStore from 'store/configureStore';
 require('./favicon.ico'); // Tell webpack to load favicon.ico

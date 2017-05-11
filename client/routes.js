@@ -1,17 +1,37 @@
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
+import client from 'api/client';
+import {
+  Route,
+  IndexRedirect,
+  browserHistory
+} from 'react-router';
 
 import {
   App,
   SurveyPage,
   NotFound,
-  UsersPage
+  UsersPage,
+  LoginPage
 } from 'components';
 
+const isAuthenticated = () => {
+  return client.authenticated((user) => {
+    if (!user) {
+      browserHistory.replace('/login');
+    }
+  });
+};
+
 export default (
-  <Route path="/" component={App}>
-    <IndexRoute component={SurveyPage} />
-    <Route path="users" component={UsersPage} />
-    <Route path="*" component={NotFound} />
-  </Route>
+  <div>
+    <Route path="/login" component={LoginPage} />
+
+    <Route path="/" component={App} onEnter={isAuthenticated}>
+      <IndexRedirect to="users" />
+      <Route path="survey" component={SurveyPage} />
+      <Route path="users" component={UsersPage} />
+    </Route>
+
+    <Route path="/*" component={NotFound} />
+  </div>
 );
