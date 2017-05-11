@@ -18,6 +18,26 @@
 @import 'vendor/vendor-dir';
 
 
+html, body {
+  height: 100%;
+}
+
+a[type='button'] {
+  display: block;
+  appearance: none;
+  padding: 1em 0;
+}
+
+.ant-menu-item a {
+  display: inline-block;
+  padding: inherit;
+  color: rgba($white, 0.7);
+
+  &:hover {
+    color: $white;
+  }
+}
+
 // ANTD
 .table-operations {
   margin-bottom: 16px;
@@ -25,4 +45,23 @@
 
 .table-operations > button {
   margin-right: 8px;
+}
+
+.login-logo {
+  display: block;
+  margin: 0 auto 1em;
+  max-width: 100px;
+  text-align: center;
+}
+
+.login-form {
+  max-width: 300px;
+}
+
+.login-form-forgot {
+  float: right;
+}
+
+.login-form-button {
+  width: 100%;
 }

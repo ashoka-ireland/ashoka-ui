@@ -1,4 +1,5 @@
 import firebase from 'firebase/app';
+import { omitBy, isUndefined } from 'lodash';
 import 'firebase/auth';
 import 'firebase/database';
 
@@ -18,21 +19,38 @@ class apiClient {
     firebase.initializeApp(config);
   }
 
+  authenticated = (callback) => {
+    return firebase.auth().onAuthStateChanged(callback);
+  }
+
   login = (email, password) => {
     return firebase.auth().signInWithEmailAndPassword(email, password);
   }
 
+  logout = () => {
+    return firebase.auth().signOut();
+  }
+
+  requestPasswordReset = (email) => {
+    return firebase.auth().sendPasswordResetEmail(email);
+  }
+
   createUser = (userDetails) => {
     const ref = firebase.database().ref();
-    const key = ref.push().key;
+    const userId = ref.push().key;
+    const filteredKeys = omitBy(userDetails, isUndefined);
+
     const data = {};
-    data[`${USERS_PATH}/${key}`] = userDetails;
-    return ref.update(data).then(() => (key));
+    // Specify individual paths here so we don't do a full overwrite
+    Object.keys(filteredKeys).forEach((key) => {
+      data[`${USERS_PATH}/${userId}/${key}`] = filteredKeys[key];
+    });
+    return ref.update(data).then(() => (userId));
   }
 
   listUsers = (cursor = null, limit = 10) => {
     const ref = firebase.database().ref(USERS_PATH);
-    return ref.orderByChild('userName')
+    return ref.orderByChild('firstName')
       .startAt(cursor)
       .limitToFirst(limit)
       .once('value')
@@ -41,4 +59,5 @@ class apiClient {
 }
 
 const client = new apiClient();
+
 export default client;

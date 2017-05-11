@@ -1,5 +1,5 @@
 import { createRequestTypes, action, fetchEntity } from '../actions';
-import client from '../../api/client';
+import client from 'api/client';
 
 export const USERS_LIST = createRequestTypes('USERS_LIST');
 

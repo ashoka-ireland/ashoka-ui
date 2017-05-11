@@ -4,7 +4,11 @@
     "react",
     "stage-1"
   ],
-  "plugins": [["import", { "libraryName": "antd", "style": "css" }]],
+  "plugins": [
+    "react-html-attrs",
+    ["import", { "libraryName": "antd", "style": "css" }],
+    "lodash"
+  ],
   "env": {
     "development": {
       "presets": [

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Form, Input, InputNumber, Progress, Checkbox, Button, Select, Radio } from 'antd';
 const FormItem = Form.Item;
+
 const RadioGroup = Radio.Group;
 import client from '../api/client';
+
 
 const formItemLayout = {
   labelCol: {
@@ -15,7 +17,7 @@ const formItemLayout = {
   },
 };
 
-class Home extends Component {
+class SurveyPage extends Component {
   constructor(props, context){
     super(props, context);
 
@@ -29,7 +31,6 @@ class Home extends Component {
       organisation: value
     });
   }
-
   submit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -45,12 +46,11 @@ class Home extends Component {
     const {getFieldDecorator} = this.props.form;
     const currentYear = new Date().getFullYear();
     return (
-      <div className="home-page">
-        <p className="text-center">
-          <h1>Ashoka Changemaker Questionnaire</h1><br />
-        </p>
-        <hr className="divider"/>
-        <h2 className="slogan"><Progress percent={30}/></h2>
+      <div class="home-page">
+        <h1 class="text-center">Ashoka Changemaker Questionnaire</h1>
+        <br />
+        <hr class="divider"/>
+        <h2 class="slogan"><Progress percent={30}/></h2>
 
 
         <Form>
@@ -806,4 +806,4 @@ class Home extends Component {
   }
 }
 
-export default Form.create()(Home);
+export default Form.create()(SurveyPage);
