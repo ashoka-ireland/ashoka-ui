@@ -29,6 +29,8 @@ export const USER_VALUES = [
 export const PLACE_OF_WORK = 'placeOfWork';
 export const OFFICE_LOCATION = 'officeLocation';
 export const ORGANISATION = 'organisation';
+export const ORGANISATIONS = 'organisations';
+export const ORGANISATION_NAME = 'organisationName';
 export const ORGANISATION_FOUNDER = 'organisationFounder';
 export const JOB_TITLE = 'jobTitle';
 export const YEAR_FOUNDED = 'yearFounded';
@@ -39,6 +41,19 @@ export const REASON_FOR_FIELD_OF_WORK = 'reasonForFieldOfWork';
 export const NUM_FULL_TIME_STAFF = 'numFullTimeStaff';
 export const NUM_PART_TIME_STAFF = 'numPartTimeStaff';
 export const NUM_VOLUNTEERS = 'numVolunteers';
+export const REVENUE_EXACT = 'revenueExact';
+export const REVENUE_ESTIMATED = 'revenueEstimated';
+export const PUBLIC_FUNDING_EXACT = 'publicFundingExact';
+export const PUBLIC_FUNDING_ESTIMATED = 'publicFundingEstimated';
+export const PHILANTHROPY_EXACT = 'philanthropyExact';
+export const PHILANTHROPY_ESTIMATED = 'philanthropyEstimated';
+export const EFFECTIVE_COUNTIES = 'effectiveCounties';
+export const NUM_PEOPLE_IMPACTED = 'numPeopleImpacted';
+export const REGISTERED_ENTITY = 'registeredEntity';
+export const REGISTERED_AS = 'registeredAs';
+export const GREATEST_BARRIERS = 'greatestBarriers';
+export const GREATEST_BARRIER = 'greatestBarrier';
+export const KEPT_UP_TO_DATE = 'keptUpToDate';
 export const SOURCES_OF_FUNDING = 'sourcesOfFunding';
 
 export const SURVEY_VALUES = [
@@ -57,4 +72,3 @@ export const SURVEY_VALUES = [
   NUM_VOLUNTEERS,
   SOURCES_OF_FUNDING
 ];
-

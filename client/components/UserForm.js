@@ -85,12 +85,12 @@ const UserForm = ({ formItemLayout, form }) => {
               <Input placeholder="Website 1"/>
             )
           }
-          <p>
+          <div style={{ paddingTop: 5 }}>
             { getFieldDecorator(constants.WEBSITE_2)(
                 <Input placeholder="Website 2"/>
               )
             }
-          </p>
+          </div>
           <Checkbox>I don't have a website.</Checkbox>
         </FormItem>
 

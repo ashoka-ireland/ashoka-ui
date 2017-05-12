@@ -1,5 +1,5 @@
 import firebase from 'firebase/app';
-import { omitBy, isUndefined, lowerCase } from 'lodash';
+import { omitBy, isUndefined, lowerCase, forEach } from 'lodash';
 import * as constants from './constants';
 import 'firebase/auth';
 import 'firebase/database';
@@ -30,11 +30,13 @@ const userValues = (availableValues, userId) => {
 
 const surveyValues = (availableValues, userId, profileId) => {
   const data = {};
-  constants.SURVEY_VALUES.forEach((value) => {
-    data[`${SURVEYS_PATH}/${profileId}/${value}`] = availableValues[value];
+  forEach(availableValues, (value, key) => {
+    if (!constants.USER_VALUES.includes(key) && value) {
+      data[`${SURVEYS_PATH}/${profileId}/${key}`] = value;
+    }
   });
   data[`${SURVEYS_PATH}/${profileId}/userId`] = userId;
-  return omitBy(data, isUndefined);
+  return data;
 };
 
 class apiClient {
