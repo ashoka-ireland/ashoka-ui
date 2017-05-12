@@ -23,6 +23,7 @@ class LoginPage extends Component {
     super(props);
 
     this.state = {
+      loading: false,
       showForgotPassword: false,
       loginError: null,
       successMessage: null
@@ -46,17 +47,19 @@ class LoginPage extends Component {
 
     const { email, password } = event.target;
 
+    this.setState({ loading: true });
+
     client.login(
       email.value,
       password.value
-    ).catch((error) => {
-      if (error.code === 'auth/user-not-found') {
+    ).then(() => { this.redirect(); })
+    .catch((error) => {
+      if (error.code) {
         this.setState({
+          loading: false,
           loginError: 'Invalid Email/Password credentials'
         });
       }
-    }).then(() => {
-      this.redirect();
     });
   }
 
@@ -125,13 +128,19 @@ class LoginPage extends Component {
           <a
             type="button"
             class="login-form-forgot"
+            style={{ paddingTop: 0 }}
             onClick={() => (this.setState({
               showForgotPassword: true
             }))}>
             Forgot password
           </a>
-          <Button type="primary" htmlType="submit" className="login-form-button">
-            Login
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="login-form-button">
+            <span>
+              {this.state.loading && <Icon type="loading" />} Login
+            </span>
           </Button>
         </FormItem>
       </Form>
@@ -155,7 +164,7 @@ class LoginPage extends Component {
                 message={loginError}
                 type="error"
                 closable
-                onClose={() => this.dismissError('loginError')}
+                onClose={() => this.dismissAlert('loginError')}
               />
             : null}
 
