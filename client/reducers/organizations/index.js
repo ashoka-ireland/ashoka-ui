@@ -9,6 +9,13 @@ export const organizations = createReducer([], {
       key,
       ...org
     }));
+  },
+  [ActionTypes.ORGANIZATION_SEARCH.SUCCESS]: (state, action) => {
+    const organizations = toPairs(action.response);
+    return map(organizations, ([key, org]) => ({
+      key,
+      ...org
+    }));
   }
 });
 

@@ -3,13 +3,13 @@ import React, {
   PropTypes,
 } from 'react';
 
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actions } from '../reducers/organizations/actions';
 
-import { Row, Icon, Button, Table } from 'antd';
+import { Button, Table, Input } from 'antd';
 
 const columns = [{
   dataIndex: 'name',
@@ -21,24 +21,44 @@ const columns = [{
 class OrganizationsPage extends Component {
   constructor(props, context) {
     super(props, context);
+
+    this.state = {
+      query: ''
+    };
   }
 
   componentWillMount() {
     this.props.actions.listOrganizations();
   }
 
+  createOrganization = () => {
+    browserHistory.push('/organizations?action=create');
+  };
+
+  onSearch = (evt) => {
+    const query = evt.target.value;
+
+    if(!query) return this.componentWillMount();
+
+    this.setState({ query }, () => {
+      this.props.actions.searchOrganizations(query);
+    });
+  };
+
   render() {
     return (
       <div>
         <div class="table-operations">
-          <Row type="flex" justify="end">
-            <Button>
-              <Icon className="plus"/>
-              <Link to="/organizations?action=create">
-                Create Organization
-              </Link>
+          <div className="search-row">
+            <Input
+              className="search-box"
+              placeholder="Search organizations..."
+              onChange={this.onSearch}
+            />
+            <Button type="primary" icon="user-add" onClick={this.createOrganization} >
+              Create Organization
             </Button>
-          </Row>
+          </div>
         </div>
 
         <Table columns={columns} dataSource={this.props.organizations} />
@@ -51,6 +71,7 @@ OrganizationsPage.propTypes = {
   organizations: PropTypes.array.isRequired,
   actions: PropTypes.shape({
     listOrganizations: PropTypes.func.isRequired,
+    searchOrganizations: PropTypes.func.isRequired
   })
 };
 OrganizationsPage.defaultProps = {};

@@ -192,6 +192,24 @@ class apiClient {
       .once('value')
       .then(response => ({ response: response.val() }));
   };
+
+  searchOrganizations = (query) => {
+    const ref = firebase.database().ref(ORGANIZATIONS_PATH);
+
+    if (!query) {
+      return Promise.resolve({ response: [] });
+    }
+
+    return ref
+      .orderByChild('name')
+      .startAt(query)
+      .endAt(`${query}\u{f8ff}`)
+      .once('value')
+      .then(response => {
+        console.log('Response for query', query, response.val());
+        return ({ response: response.val() });
+      });
+  };
 }
 
 const client = new apiClient();
