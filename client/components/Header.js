@@ -23,8 +23,8 @@ class Header extends Component {
         </div>
 
         <Menu mode="horizontal" theme="dark">
-          <Menu.Item key="survey">
-            <Link activeClassName="active" to="/survey">Survey</Link>
+          <Menu.Item key="surveys">
+            <Link activeClassName="active" to="/surveys">Surveys</Link>
           </Menu.Item>
           <Menu.Item key="nominees">
             <Link activeClassName="active" to="/nominees">Nominees</Link>

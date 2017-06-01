@@ -1,5 +1,5 @@
 import firebase from 'firebase/app';
-import { omitBy, isUndefined, lowerCase, forEach } from 'lodash';
+import { omitBy, isUndefined, lowerCase, forEach, reduce } from 'lodash';
 import * as constants from './constants';
 import 'firebase/auth';
 import 'firebase/database';
@@ -71,6 +71,51 @@ class apiClient {
     return firebase.auth().sendPasswordResetEmail(email);
   };
 
+  listSurveys = async () => {
+    const ref = firebase.database().ref(SURVEYS_PATH);
+
+    const [surveys, users] = await Promise.all([
+      ref.once('value'),
+      this.listNominees()
+    ]);
+
+    const usersList = users.response;
+    const surveysList = surveys.val();
+
+    if(!usersList) return {response: surveysList};
+
+    const response = reduce(surveysList, (result, value, key) => {
+      if(usersList.hasOwnProperty(value.nomineeId)){
+        result[key] = {
+          ...value,
+          user: {...usersList[value.nomineeId]}
+        };
+      }
+      return result;
+    }, {});
+
+    return {response};
+  };
+
+  searchSurveys = async (query) => {
+    const usersMatching = await this.searchNominees(query);
+    const users = usersMatching.response;
+    const allSurveys = await this.listSurveys();
+    const surveys = allSurveys.response;
+
+    const response = reduce(surveys, (result, value, key) => {
+      if(users.hasOwnProperty(value.nomineeId)){
+        result[key] = {
+          ...value
+        };
+      }
+
+      return result;
+    }, {});
+
+    return {response};
+  };
+
   createNominee = (details) => {
     const ref = firebase.database().ref();
     let data;
@@ -111,7 +156,7 @@ class apiClient {
     }
 
     return ref
-      .orderByChild('sortName')
+      .orderByChild('firstName')
       .startAt(query)
       .endAt(`${query}\u{f8ff}`)
       .once('value')
