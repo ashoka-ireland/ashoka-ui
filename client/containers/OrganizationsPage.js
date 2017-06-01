@@ -3,24 +3,24 @@ import React, {
   PropTypes,
 } from 'react';
 
-import { Row, Icon, Button, Table } from 'antd';
+import { Link } from 'react-router';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actions } from '../reducers/organizations/actions';
 
+import { Row, Icon, Button, Table } from 'antd';
+
 const columns = [{
   dataIndex: 'name',
   title: 'Name',
-  key: 'name'
+  key: 'name',
+  render: (text, record) => <Link to={`/organizations/${record.key}?action=edit`}>{text}</Link>
 }];
 
 class OrganizationsPage extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = {
-      query: ''
-    };
   }
 
   componentWillMount() {
@@ -32,7 +32,12 @@ class OrganizationsPage extends Component {
       <div>
         <div class="table-operations">
           <Row type="flex" justify="end">
-            <Button><Icon className="plus"/>Create Organization</Button>
+            <Button>
+              <Icon className="plus"/>
+              <Link to="/organizations?action=create">
+                Create Organization
+              </Link>
+            </Button>
           </Row>
         </div>
 

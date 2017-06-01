@@ -31,6 +31,7 @@ const isAuthenticated = () => {
 const OrganizationPages = PageFlowWrapper({
   create: OrganizationPage,
   edit: OrganizationPage,
+  view: OrganizationPage,
   list: OrganizationsPage,
   defaultMode: 'list'
 });

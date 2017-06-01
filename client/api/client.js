@@ -41,6 +41,15 @@ const surveyValues = (availableValues, userId, profileId) => {
   return data;
 };
 
+const organizationValue = (organization, organizationId) => {
+  const data = {};
+  forEach(organization, (value, key) => {
+    data[`${ORGANIZATIONS_PATH}/${organizationId}/${key}`] = value;
+  });
+
+  return data;
+};
+
 class apiClient {
   constructor() {
     firebase.initializeApp(config);
@@ -155,6 +164,26 @@ class apiClient {
       .then(response => ({ response: response.val() }));
   };
 
+  createOrganization = (organization) => {
+    const ref = firebase.database().ref();
+    let data;
+
+    if(!organization.hasOwnProperty('key')){
+      const orgId = ref.push().key;
+      data = organizationValue(organization, orgId);
+    }else{
+      const { key, ...orgDetails } = organization;
+      data = organizationValue(orgDetails, key);
+    }
+
+    return ref.update(data).then(() => data.key);
+  };
+
+  getOrganization = (organizationId) => {
+    const ref = firebase.database().ref(`${ORGANIZATIONS_PATH}/${organizationId}`);
+    return ref.once('value').then(response => ({ response: response.val() }));
+  };
+
   listOrganizations = (cursor = null, limit = 10) => {
     const ref = firebase.database().ref(ORGANIZATIONS_PATH);
     return ref.orderByChild('name')
@@ -162,11 +191,6 @@ class apiClient {
       .limitToFirst(limit)
       .once('value')
       .then(response => ({ response: response.val() }));
-  };
-
-  getOrganization = (organizationId) => {
-    const ref = firebase.database().ref(`${ORGANIZATIONS_PATH}/${organizationId}`);
-    return ref.once('value').then(response => ({ response: response.val() }));
   };
 }
 

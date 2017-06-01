@@ -2,7 +2,7 @@ import { createRequestTypes, fetchEntity, createRequestActions } from '../action
 import client from 'api/client'; //eslint-disable-line
 
 export const ORGANIZATION_LIST = createRequestTypes('ORGANIZATIONS_LIST');
-export const ORGANIZATION_GET = createRequestTypes('ORGANIZATIONS_LIST');
+export const ORGANIZATION_GET = createRequestTypes('ORGANIZATIONS_GET');
 
 export const events = {
   listOrganizations: createRequestActions(ORGANIZATION_LIST),
