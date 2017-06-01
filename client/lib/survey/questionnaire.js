@@ -1,6 +1,6 @@
 import React from 'react';
 import * as constants from '../../api/constants';
-import { UserForm, OrganisationForm } from '../../components';
+import { NomineeForm, OrganisationForm } from '../../components';
 import * as field from './fields';
 
 export default [
@@ -10,7 +10,7 @@ export default [
       {
         type: field.CUSTOM,
         customField: (formItemLayout, form) => (
-          <UserForm key='user-form' formItemLayout={formItemLayout} form={form} />
+          <NomineeForm key='user-form' formItemLayout={formItemLayout} form={form} />
         )
       },{
         label: 'Do you work from an office or home?',

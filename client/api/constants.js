@@ -11,7 +11,7 @@ export const GENDER = 'gender';
 export const NATIONALITY = 'nationality';
 export const COUNTRY_OF_RESIDENCE = 'countryOfResidence';
 
-export const USER_VALUES = [
+export const NOMINEE_VALUES = [
   FIRST_NAME,
   LAST_NAME,
   EMAIL,

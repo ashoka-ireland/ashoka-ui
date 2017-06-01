@@ -26,9 +26,6 @@ class Header extends Component {
           <Menu.Item key="survey">
             <Link activeClassName="active" to="/survey">Survey</Link>
           </Menu.Item>
-          <Menu.Item key="users">
-            <Link activeClassName="active" to="/users">Users</Link>
-          </Menu.Item>
           <Menu.Item key="nominees">
             <Link activeClassName="active" to="/nominees">Nominees</Link>
           </Menu.Item>

@@ -20,7 +20,7 @@ class SurveyPage extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        client.createUser(values);
+        client.createNominee(values);
       }
     });
   }

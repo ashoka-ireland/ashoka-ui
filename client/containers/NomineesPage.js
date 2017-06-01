@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actions } from '../reducers/nominees/actions';
 import { Link, browserHistory } from 'react-router';
-import { Table, Input, Button } from 'antd';
+import { Table, Input, Button, Tag } from 'antd';
 
 const columns = [{
   title: 'Name',
@@ -16,8 +16,14 @@ const columns = [{
   title: 'Phone',
   dataIndex: 'primaryDialCode'
 }, {
-  title: 'Country',
-  dataIndex: 'countryOfResidence'
+  title: 'Status',
+  dataIndex: 'status',
+  render: (text) => {
+    if(text == 'complete') {
+      return <Tag color="green">Complete</Tag>;
+    }
+    return <Tag color="orange">Draft</Tag>;
+  }
 }];
 
 class NomineesPage extends Component {
@@ -88,10 +94,7 @@ NomineesPage.propTypes = {
   actions: PropTypes.shape({
     listNominees: PropTypes.func.isRequired,
     searchNominees: PropTypes.func.isRequired
-  }),
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired
-  }).isRequired
+  })
 };
 
 const mapStateToProps = (state) => ({
