@@ -11,6 +11,7 @@ export const FACEBOOK_PROFILE = 'facebookProfile';
 export const GENDER = 'gender';
 export const NATIONALITY = 'nationality';
 export const COUNTRY_OF_RESIDENCE = 'countryOfResidence';
+export const ADDITIONAL_NOMINEE_INFO = 'additionalNomineeInfo';
 
 export const NOMINEE_VALUES = [
   FIRST_NAME,
@@ -25,7 +26,8 @@ export const NOMINEE_VALUES = [
   FACEBOOK_PROFILE,
   GENDER,
   NATIONALITY,
-  COUNTRY_OF_RESIDENCE
+  COUNTRY_OF_RESIDENCE,
+  ADDITIONAL_NOMINEE_INFO
 ];
 
 export const PLACE_OF_WORK = 'placeOfWork';

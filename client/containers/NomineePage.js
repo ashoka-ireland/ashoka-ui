@@ -1,4 +1,4 @@
-import { Form, Button, Row, Switch } from 'antd';
+import { Form, Button, Row, Switch, Input } from 'antd';
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -41,7 +41,7 @@ class NomineePage extends Component {
           {...this.props.form.formItemLayout}
           label="Draft"
         >
-          {this.props.form.getFieldDecorator(constants.DRAFT, {
+          { this.props.form.getFieldDecorator(constants.DRAFT, {
             valuePropName: 'checked',
             initialValue: true
           })(
@@ -52,6 +52,16 @@ class NomineePage extends Component {
         <hr className="divider secondary" />
 
         <NomineeForm form={this.props.form} requireFields={false} />
+
+        <FormItem
+          {...this.props.form.formItemLayout}
+          label="Additional Notes"
+        >
+          { this.props.form.getFieldDecorator(constants.ADDITIONAL_NOMINEE_INFO)(
+              <Input type="textarea" rows={3} />
+            )
+          }
+        </FormItem>
 
         <hr className="divider secondary" />
 
