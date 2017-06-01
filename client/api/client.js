@@ -22,6 +22,7 @@ const nomineeValues = (availableValues, nomineeId) => {
   constants.NOMINEE_VALUES.forEach((value) => {
     data[`${NOMINEES_PATH}/${nomineeId}/${value}`] = availableValues[value];
   });
+  data[`${NOMINEES_PATH}/${nomineeId}/draft`] = availableValues.draft || false;
   data[`${NOMINEES_PATH}/${nomineeId}/id`] = nomineeId;
   data[`${NOMINEES_PATH}/${nomineeId}/sortName`] = lowerCase(
     `${availableValues.firstName} ${availableValues.lastName}`
