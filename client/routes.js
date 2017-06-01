@@ -15,6 +15,9 @@ import {
   UserPage,
   NomineePage,
   NomineesPage
+  OrganizationPage,
+  OrganizationsPage,
+  PageFlowWrapper
 } from 'containers';
 
 const isAuthenticated = () => {
@@ -25,6 +28,13 @@ const isAuthenticated = () => {
   });
 };
 
+const OrganizationPages = PageFlowWrapper({
+  create: OrganizationPage,
+  edit: OrganizationPage,
+  list: OrganizationsPage,
+  defaultMode: 'list'
+});
+
 export default (
   <div>
     <Route path="/login" component={LoginPage} />
@@ -32,6 +42,7 @@ export default (
     <Route path="/" component={App} onEnter={isAuthenticated}>
       <IndexRedirect to="users" />
       <Route path="survey" component={SurveyPage} />
+      <Route path="organizations(/:organizationKey)" component={OrganizationPages} />
       <Route path="users" component={UsersPage} />
       <Route path="users/:userKey" component={UserPage} />
       <Route path="nominees" component={NomineesPage} />

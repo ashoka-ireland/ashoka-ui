@@ -32,6 +32,9 @@ class Header extends Component {
           <Menu.Item key="nominees">
             <Link activeClassName="active" to="/nominees">Nominees</Link>
           </Menu.Item>
+          <Menu.Item key="organization">
+            <Link activeClassName="active" to="/organizations">Organizations</Link>
+          </Menu.Item>
           <Menu.Item key="logout">
             <a type="button" onClick={this.logout}>Logout</a>
           </Menu.Item>
