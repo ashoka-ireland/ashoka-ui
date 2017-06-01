@@ -1,5 +1,5 @@
 import firebase from 'firebase/app';
-import { omitBy, isUndefined, lowerCase, forEach } from 'lodash';
+import { omitBy, isUndefined, lowerCase, forEach, reduce } from 'lodash';
 import * as constants from './constants';
 import 'firebase/auth';
 import 'firebase/database';
@@ -69,6 +69,28 @@ class apiClient {
 
   requestPasswordReset = (email) => {
     return firebase.auth().sendPasswordResetEmail(email);
+  };
+
+  listSurveys = async () => {
+    const ref = firebase.database().ref(SURVEYS_PATH);
+
+    const [surveys, users] = await Promise.all([
+      ref.once('value'),
+      this.listUsers()
+    ]);
+
+    const usersList = users.response;
+    const response = reduce(surveys.val(), (result, value, key) => {
+      if(usersList.hasOwnProperty(value.userId)){
+        result[key] = {
+          ...value,
+          user: {...usersList[value.userId]}
+        };
+      }
+      return result;
+    }, {});
+
+    return {response};
   };
 
   createNominee = (details) => {

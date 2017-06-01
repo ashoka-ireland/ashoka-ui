@@ -1,5 +1,6 @@
 export App from './App';
 export SurveyPage from './SurveyPage';
+export SurveysPage from './SurveysPage';
 export NotFound from './NotFound';
 export LoginPage from './LoginPage';
 export NomineesPage from './NomineesPage';
