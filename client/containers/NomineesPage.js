@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { actions } from '../reducers/nominees/actions';
-import { Link, browserHistory } from 'react-router';
 import { Table, Input, Button, Tag } from 'antd';
+import { Link, browserHistory } from 'react-router';
+import { actions } from '../reducers/nominees/actions';
+//import { questionnaire } from '../lib/survey/questionnaire';
 
 const columns = [{
   title: 'Name',
@@ -22,6 +23,14 @@ const columns = [{
     if(record.draft) {
       return <Tag color="orange">Draft</Tag>;
     }
+    return <Tag color="green">Profile Complete</Tag>;
+  }
+}, {
+  title: 'Interview Status',
+  key: 'interview',
+  render: () => {
+    // TODO: Check if user has a survey
+    // count the sections complete using questionnaire import
     return <Tag color="blue">0% complete</Tag>;
   }
 }];
