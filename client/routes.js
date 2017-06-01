@@ -14,7 +14,7 @@ import {
   LoginPage,
   UserPage,
   NomineePage,
-  NomineesPage
+  NomineesPage,
   OrganizationPage,
   OrganizationsPage,
   PageFlowWrapper
