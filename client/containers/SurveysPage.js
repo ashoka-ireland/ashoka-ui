@@ -3,7 +3,7 @@ import React, {
   PropTypes,
 } from 'react';
 
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -21,7 +21,7 @@ const columns = [
     dataIndex: 'user.firstName',
     key: 'user.firstName',
     title: 'User',
-    render: (text, record) => <Link to={`/users/${record.userId}`}> {text} {record.user.lastName} </Link>
+    render: (text, record) => <Link to={`/nominees/${record.nomineeId}`}> {text} {record.user.lastName} </Link>
   }
 ];
 
@@ -37,6 +37,9 @@ class SurveysPage extends Component {
     this.props.actions.listSurveys();
   }
 
+  addSurvey = () => {
+    browserHistory.push('/survey');
+  };
 
   onSearch = (evt) => {
     const query = evt.target.value;
@@ -44,8 +47,7 @@ class SurveysPage extends Component {
     if(!query) return this.componentWillMount();
 
     this.setState({ query }, () => {
-      // this.props.actions.searchOrganizations(query);
-      console.log('Searching surveys by...', query);
+      this.props.actions.searchSurveys(query);
     });
   };
 
@@ -59,8 +61,8 @@ class SurveysPage extends Component {
               placeholder="Search survey..."
               onChange={this.onSearch}
             />
-            <Button type="primary" icon="plus" onClick={this.addOrganization} >
-              Add Organization
+            <Button type="primary" icon="plus" onClick={this.addSurvey} >
+              Add Survey
             </Button>
           </div>
         </div>
@@ -75,6 +77,7 @@ SurveysPage.propTypes = {
   surveys: PropTypes.array.isRequired,
   actions: PropTypes.shape({
     listSurveys: PropTypes.func.isRequired,
+    searchSurveys: PropTypes.func.isRequired,
   })
 };
 

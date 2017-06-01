@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { Form, Progress, Button } from 'antd';
+import { browserHistory } from 'react-router';
+
+import { Form, Progress, Button, notification } from 'antd';
 import client from '../api/client';
 import { buildSurvey } from '../lib/survey/builder';
 
@@ -20,7 +22,10 @@ class SurveyPage extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        client.createNominee(values);
+        client.createNominee(values).then(() => {
+          notification.success({title: 'Survey created correctly...'});
+          browserHistory.push('/surveys');
+        });
       }
     });
   }

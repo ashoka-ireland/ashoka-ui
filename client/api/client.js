@@ -76,17 +76,40 @@ class apiClient {
 
     const [surveys, users] = await Promise.all([
       ref.once('value'),
-      this.listUsers()
+      this.listNominees()
     ]);
 
     const usersList = users.response;
-    const response = reduce(surveys.val(), (result, value, key) => {
-      if(usersList.hasOwnProperty(value.userId)){
+    const surveysList = surveys.val();
+
+    if(!usersList) return {response: surveysList};
+
+    const response = reduce(surveysList, (result, value, key) => {
+      if(usersList.hasOwnProperty(value.nomineeId)){
         result[key] = {
           ...value,
-          user: {...usersList[value.userId]}
+          user: {...usersList[value.nomineeId]}
         };
       }
+      return result;
+    }, {});
+
+    return {response};
+  };
+
+  searchSurveys = async (query) => {
+    const usersMatching = await this.searchNominees(query);
+    const users = usersMatching.response;
+    const allSurveys = await this.listSurveys();
+    const surveys = allSurveys.response;
+
+    const response = reduce(surveys, (result, value, key) => {
+      if(users.hasOwnProperty(value.nomineeId)){
+        result[key] = {
+          ...value
+        };
+      }
+
       return result;
     }, {});
 
@@ -133,7 +156,7 @@ class apiClient {
     }
 
     return ref
-      .orderByChild('sortName')
+      .orderByChild('firstName')
       .startAt(query)
       .endAt(`${query}\u{f8ff}`)
       .once('value')

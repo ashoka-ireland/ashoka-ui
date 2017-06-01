@@ -9,5 +9,12 @@ export const surveys = createReducer([], {
       key,
       ...survey
     }));
+  },
+  [ActionTypes.SURVEY_SEARCH.SUCCESS]: (state, action) => {
+    const surveys = toPairs(action.response);
+    return map(surveys, ([key, survey]) => ({
+      key,
+      ...survey
+    }));
   }
 });
