@@ -31,7 +31,7 @@ class OrganizationsPage extends Component {
     this.props.actions.listOrganizations();
   }
 
-  createOrganization = () => {
+  addOrganization = () => {
     browserHistory.push('/organizations?action=create');
   };
 
@@ -50,13 +50,13 @@ class OrganizationsPage extends Component {
       <div>
         <div class="table-operations">
           <div className="search-row">
-            <Input
+            <Input.Search
               className="search-box"
               placeholder="Search organizations..."
               onChange={this.onSearch}
             />
-            <Button type="primary" icon="user-add" onClick={this.createOrganization} >
-              Create Organization
+            <Button type="primary" icon="plus" onClick={this.addOrganization} >
+              Add Organization
             </Button>
           </div>
         </div>

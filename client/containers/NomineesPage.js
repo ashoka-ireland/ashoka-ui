@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actions } from '../reducers/nominees/actions';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { Table, Input, Button } from 'antd';
 
 const columns = [{
@@ -38,7 +38,11 @@ class NomineesPage extends Component {
   }
 
   onGoNominee = () => {
-    this.props.history.push('/nominees/create');
+    browserHistory.push('/nominees/create');
+  }
+
+  addOrganization = () => {
+    browserHistory.push('/organizations?action=create');
   }
 
   render = () => {
@@ -59,14 +63,15 @@ class NomineesPage extends Component {
       <div>
         <div class="table-operations">
           <div className="search-row">
-            <Input
+            <Input.Search
               className="search-box"
-              ref={(c) => { this.SearchInput = c; }}
-              value={this.state.query}
               placeholder="Search nominees..."
               onChange={this.search} />
-            <Button type="primary" icon="user-add" onClick={this.onGoNominee} >
+            <Button type="primary" icon="plus" onClick={this.onGoNominee} >
               Add Nominee
+            </Button>
+            <Button style={{marginLeft: 10}} type="primary" icon="plus" onClick={this.addOrganization} >
+              Add Organization
             </Button>
           </div>
         </div>
