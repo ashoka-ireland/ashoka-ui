@@ -109,8 +109,24 @@ class apiClient {
       .then(response => ({ response: response.val() }));
   }
 
-  getNominee = (userId) => {
-    const ref = firebase.database().ref(`${NOMINEES_PATH}/${userId}`);
+  createNominee = (details) => {
+    let ref = firebase.database().ref(NOMINEES_PATH);
+    const data = omitBy(details, isUndefined);
+    let nomineeId;
+    if(details.hasOwnProperty('key')) {
+      nomineeId = details.key;
+    } else {
+      ref = ref.push();
+      nomineeId = ref.key;
+      data.nominatedBy = firebase.auth().currentUser.uid;
+    }
+    data.id = nomineeId;
+    data.sortName = lowerCase(`${data.firstName} ${data.lastName}`);
+    return ref.update(data).then(() => (nomineeId));
+  }
+
+  getNominee = (nomineeId) => {
+    const ref = firebase.database().ref(`${NOMINEES_PATH}/${nomineeId}`);
     return ref.once('value').then(response => ({ response: response.val() }));
   }
 

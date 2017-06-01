@@ -1,0 +1,21 @@
+.search-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  align-content: stretch;
+  align-items: stretch;
+
+  .search-box {
+    order: 0;
+    flex: 1 1 auto;
+    align-self: auto;
+    margin-right: 10px;
+  }
+
+  button {
+    order: 0;
+    flex: 0 1 auto;
+    align-self: auto;
+  }
+}

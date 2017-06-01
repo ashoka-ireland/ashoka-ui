@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actions } from '../reducers/nominees/actions';
 import { Link } from 'react-router';
-import { Table, Input, Row } from 'antd';
+import { Table, Input, Button } from 'antd';
 
 const columns = [{
   title: 'Name',
@@ -23,10 +23,7 @@ const columns = [{
 class NomineesPage extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      query: ''
-    };
+    this.state = { query: '' };
   }
 
   componentWillMount = () => {
@@ -35,10 +32,13 @@ class NomineesPage extends Component {
 
   search = (event) => {
     const query = event.target.value;
-
     this.setState({ query }, () => {
       this.props.actions.searchNominees(query);
     });
+  }
+
+  onGoNominee = () => {
+    this.props.history.push('/nominees/create');
   }
 
   render = () => {
@@ -58,13 +58,17 @@ class NomineesPage extends Component {
     return (
       <div>
         <div class="table-operations">
-          <Row type="flex" justify="end">
+          <div className="search-row">
             <Input
+              className="search-box"
               ref={(c) => { this.SearchInput = c; }}
               value={this.state.query}
               placeholder="Search nominees..."
               onChange={this.search} />
-          </Row>
+            <Button type="primary" icon="user-add" onClick={this.onGoNominee} >
+              Add Nominee
+            </Button>
+          </div>
         </div>
 
         <Table columns={columns} dataSource={data} />
@@ -79,7 +83,10 @@ NomineesPage.propTypes = {
   actions: PropTypes.shape({
     listNominees: PropTypes.func.isRequired,
     searchNominees: PropTypes.func.isRequired
-  })
+  }),
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }).isRequired
 };
 
 const mapStateToProps = (state) => ({

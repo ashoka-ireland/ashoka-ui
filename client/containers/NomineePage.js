@@ -10,7 +10,7 @@ import { NomineeForm } from '../components';
 class NomineePage extends Component {
 
   componentWillMount = () => {
-    if (this.props.params.nomineeKey) {
+    if (this.props.params.nomineeKey && this.props.params.nomineeKey != 'create') {
       this.props.actions.getNominee(this.props.params.nomineeKey);
     }
   }
@@ -30,7 +30,7 @@ class NomineePage extends Component {
       <Form>
         <hr className="divider secondary" />
 
-        <NomineeForm form={this.props.form} />
+        <NomineeForm form={this.props.form} requireFields={false} />
 
         <hr className="divider secondary" />
 

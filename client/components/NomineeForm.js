@@ -5,7 +5,7 @@ import * as constants from '../api/constants';
 const Option = Select.Option;
 const FormItem = Form.Item;
 
-const NomineeForm = ({ formItemLayout, form }) => {
+const NomineeForm = ({ formItemLayout, form, requireFields }) => {
   const { getFieldDecorator } = form;
   return (
     <div>
@@ -13,7 +13,7 @@ const NomineeForm = ({ formItemLayout, form }) => {
         {...formItemLayout}
         label="First Name">
         { getFieldDecorator(constants.FIRST_NAME, {
-          rules: [{ required: true, message: 'Please input a first name' }],
+          rules: [{ required: requireFields, message: 'Please input a first name' }],
         })(
             <Input placeholder="First Name" />
           )
@@ -25,7 +25,7 @@ const NomineeForm = ({ formItemLayout, form }) => {
         label="Surname"
       >
         { getFieldDecorator(constants.LAST_NAME, {
-          rules: [{ required: true, message: 'Please input a last name' }],
+          rules: [{ required: requireFields, message: 'Please input a last name' }],
         })(
             <Input placeholder="Surname"/>
           )
@@ -37,7 +37,7 @@ const NomineeForm = ({ formItemLayout, form }) => {
         label="Email"
       >
         { getFieldDecorator(constants.EMAIL, {
-          rules: [{ required: true, message: 'Please input an email' }],
+          rules: [{ required: requireFields, message: 'Please input an email' }],
         })(
             <Input placeholder="Email"/>
           )
@@ -50,7 +50,7 @@ const NomineeForm = ({ formItemLayout, form }) => {
       >
       { getFieldDecorator(constants.PRIMARY_DIAL_CODE, {
         rules: [
-          { required: true, message: 'Please input a primary phone number' }
+          { required: requireFields, message: 'Please input a primary phone number' }
         ],
       })(
           <Input addonBefore="+353"/>
@@ -125,6 +125,7 @@ const NomineeForm = ({ formItemLayout, form }) => {
 };
 
 NomineeForm.propTypes = {
+  requireFields: PropTypes.bool,
   formItemLayout: PropTypes.object,
   form: PropTypes.shape({
     getFieldDecorator: PropTypes.func.isRequired
@@ -132,6 +133,7 @@ NomineeForm.propTypes = {
 };
 
 NomineeForm.defaultProps = {
+  requireFields: true,
   formItemLayout: {
     labelCol: {
       xs: {span: 24},
