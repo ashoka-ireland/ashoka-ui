@@ -12,7 +12,9 @@ import {
   NotFound,
   UsersPage,
   LoginPage,
-  UserPage
+  UserPage,
+  NomineePage,
+  NomineesPage
 } from 'containers';
 
 const isAuthenticated = () => {
@@ -32,6 +34,8 @@ export default (
       <Route path="survey" component={SurveyPage} />
       <Route path="users" component={UsersPage} />
       <Route path="users/:userKey" component={UserPage} />
+      <Route path="nominees" component={NomineesPage} />
+      <Route path="nominees/:nomineeKey" component={NomineePage} />
     </Route>
 
     <Route path="/*" component={NotFound} />

@@ -6,6 +6,7 @@ import 'firebase/database';
 
 const USERS_PATH = '/users';
 const SURVEYS_PATH = '/surveys';
+const NOMINEES_PATH = '/nominees';
 
 const config = {
   apiKey: 'AIzaSyCQnvhtra0swrYaGvwSFiavtkKwdwSQd6g',
@@ -95,6 +96,35 @@ class apiClient {
 
   searchUsers = (query) => {
     const ref = firebase.database().ref(USERS_PATH);
+
+    if (!query) {
+      return Promise.resolve({ response: [] });
+    }
+
+    return ref
+      .orderByChild('sortName')
+      .startAt(query)
+      .endAt(`${query}\u{f8ff}`)
+      .once('value')
+      .then(response => ({ response: response.val() }));
+  }
+
+  getNominee = (userId) => {
+    const ref = firebase.database().ref(`${NOMINEES_PATH}/${userId}`);
+    return ref.once('value').then(response => ({ response: response.val() }));
+  }
+
+  listNominees = (cursor = null, limit = 10) => {
+    const ref = firebase.database().ref(NOMINEES_PATH);
+    return ref.orderByChild('firstName')
+      .startAt(cursor)
+      .limitToFirst(limit)
+      .once('value')
+      .then(response => ({ response: response.val() }));
+  }
+
+  searchNominees = (query) => {
+    const ref = firebase.database().ref(NOMINEES_PATH);
 
     if (!query) {
       return Promise.resolve({ response: [] });
