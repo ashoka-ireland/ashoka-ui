@@ -7,6 +7,7 @@ import 'firebase/database';
 const USERS_PATH = '/users';
 const SURVEYS_PATH = '/surveys';
 const NOMINEES_PATH = '/nominees';
+const ORGANIZATIONS_PATH = '/organizations';
 
 const config = {
   apiKey: 'AIzaSyCQnvhtra0swrYaGvwSFiavtkKwdwSQd6g',
@@ -40,6 +41,15 @@ const surveyValues = (availableValues, userId, profileId) => {
   return data;
 };
 
+const organizationValue = (organization, organizationId) => {
+  const data = {};
+  forEach(organization, (value, key) => {
+    data[`${ORGANIZATIONS_PATH}/${organizationId}/${key}`] = value;
+  });
+
+  return data;
+};
+
 class apiClient {
   constructor() {
     firebase.initializeApp(config);
@@ -47,19 +57,19 @@ class apiClient {
 
   authenticated = (callback) => {
     return firebase.auth().onAuthStateChanged(callback);
-  }
+  };
 
   login = (email, password) => {
     return firebase.auth().signInWithEmailAndPassword(email, password);
-  }
+  };
 
   logout = () => {
     return firebase.auth().signOut();
-  }
+  };
 
   requestPasswordReset = (email) => {
     return firebase.auth().sendPasswordResetEmail(email);
-  }
+  };
 
   createUser = (details) => {
     const ref = firebase.database().ref();
@@ -78,12 +88,12 @@ class apiClient {
       };
     }
     return ref.update(data).then(() => (userId));
-  }
+  };
 
   getUser = (userId) => {
     const ref = firebase.database().ref(`${USERS_PATH}/${userId}`);
     return ref.once('value').then(response => ({ response: response.val() }));
-  }
+  };
 
   listUsers = (cursor = null, limit = 10) => {
     const ref = firebase.database().ref(USERS_PATH);
@@ -92,7 +102,7 @@ class apiClient {
       .limitToFirst(limit)
       .once('value')
       .then(response => ({ response: response.val() }));
-  }
+  };
 
   searchUsers = (query) => {
     const ref = firebase.database().ref(USERS_PATH);
@@ -107,7 +117,7 @@ class apiClient {
       .endAt(`${query}\u{f8ff}`)
       .once('value')
       .then(response => ({ response: response.val() }));
-  }
+  };
 
   createNominee = (details) => {
     let ref = firebase.database().ref(NOMINEES_PATH);
@@ -123,12 +133,12 @@ class apiClient {
     data.id = nomineeId;
     data.sortName = lowerCase(`${data.firstName} ${data.lastName}`);
     return ref.update(data).then(() => (nomineeId));
-  }
+  };
 
   getNominee = (nomineeId) => {
     const ref = firebase.database().ref(`${NOMINEES_PATH}/${nomineeId}`);
     return ref.once('value').then(response => ({ response: response.val() }));
-  }
+  };
 
   listNominees = (cursor = null, limit = 10) => {
     const ref = firebase.database().ref(NOMINEES_PATH);
@@ -137,7 +147,7 @@ class apiClient {
       .limitToFirst(limit)
       .once('value')
       .then(response => ({ response: response.val() }));
-  }
+  };
 
   searchNominees = (query) => {
     const ref = firebase.database().ref(NOMINEES_PATH);
@@ -152,7 +162,54 @@ class apiClient {
       .endAt(`${query}\u{f8ff}`)
       .once('value')
       .then(response => ({ response: response.val() }));
-  }
+  };
+
+  createOrganization = (organization) => {
+    const ref = firebase.database().ref();
+    let data;
+
+    if(!organization.hasOwnProperty('key')){
+      const orgId = ref.push().key;
+      data = organizationValue(organization, orgId);
+    }else{
+      const { key, ...orgDetails } = organization;
+      data = organizationValue(orgDetails, key);
+    }
+
+    return ref.update(data).then(() => data.key);
+  };
+
+  getOrganization = (organizationId) => {
+    const ref = firebase.database().ref(`${ORGANIZATIONS_PATH}/${organizationId}`);
+    return ref.once('value').then(response => ({ response: response.val() }));
+  };
+
+  listOrganizations = (cursor = null, limit = 10) => {
+    const ref = firebase.database().ref(ORGANIZATIONS_PATH);
+    return ref.orderByChild('name')
+      .startAt(cursor)
+      .limitToFirst(limit)
+      .once('value')
+      .then(response => ({ response: response.val() }));
+  };
+
+  searchOrganizations = (query) => {
+    const ref = firebase.database().ref(ORGANIZATIONS_PATH);
+
+    if (!query) {
+      return Promise.resolve({ response: [] });
+    }
+
+    return ref
+      .orderByChild('name')
+      .startAt(query)
+      .endAt(`${query}\u{f8ff}`)
+      .once('value')
+      .then(response => {
+        console.log('Response for query', query, response.val());
+        return ({ response: response.val() });
+      });
+  };
 }
 
 const client = new apiClient();
