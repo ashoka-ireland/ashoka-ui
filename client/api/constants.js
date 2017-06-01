@@ -1,6 +1,7 @@
 export const FIRST_NAME = 'firstName';
 export const LAST_NAME = 'lastName';
 export const EMAIL = 'email';
+export const DRAFT = 'draft';
 export const PRIMARY_DIAL_CODE = 'primaryDialCode';
 export const SECONDARY_DIAL_CODE = 'secondaryDialCode';
 export const WEBSITE_1 = 'website1';
@@ -15,6 +16,7 @@ export const NOMINEE_VALUES = [
   FIRST_NAME,
   LAST_NAME,
   EMAIL,
+  DRAFT,
   PRIMARY_DIAL_CODE,
   SECONDARY_DIAL_CODE,
   WEBSITE_1,

@@ -24,7 +24,7 @@ export const nomineesSearchResults = createReducer([], {
   }
 });
 
-export const nominee = createReducer({ status: 'draft' }, {
+export const nominee = createReducer({ draft: true }, {
   [ActionTypes.NOMINEE_GET.REQUEST]: () => {
     return {};
   },

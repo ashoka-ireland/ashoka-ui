@@ -94,11 +94,10 @@ class apiClient {
     return ref.once('value').then(response => ({ response: response.val() }));
   };
 
-  listNominees = (cursor = null, limit = 10) => {
+  listNominees = (cursor = null) => {
     const ref = firebase.database().ref(NOMINEES_PATH);
     return ref.orderByChild('firstName')
       .startAt(cursor)
-      .limitToFirst(limit)
       .once('value')
       .then(response => ({ response: response.val() }));
   };
@@ -138,11 +137,10 @@ class apiClient {
     return ref.once('value').then(response => ({ response: response.val() }));
   };
 
-  listOrganizations = (cursor = null, limit = 10) => {
+  listOrganizations = (cursor = null) => {
     const ref = firebase.database().ref(ORGANIZATIONS_PATH);
     return ref.orderByChild('name')
       .startAt(cursor)
-      .limitToFirst(limit)
       .once('value')
       .then(response => ({ response: response.val() }));
   };

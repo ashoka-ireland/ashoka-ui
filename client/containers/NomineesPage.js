@@ -17,12 +17,12 @@ const columns = [{
   dataIndex: 'primaryDialCode'
 }, {
   title: 'Status',
-  dataIndex: 'status',
-  render: (text) => {
-    if(text == 'complete') {
-      return <Tag color="green">Complete</Tag>;
+  key: 'status',
+  render: (text, record) => {
+    if(record.draft) {
+      return <Tag color="orange">Draft</Tag>;
     }
-    return <Tag color="orange">Draft</Tag>;
+    return <Tag color="blue">0% complete</Tag>;
   }
 }];
 

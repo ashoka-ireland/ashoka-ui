@@ -1,4 +1,4 @@
-import { Form, Button, Row, Tag } from 'antd';
+import { Form, Button, Row, Switch } from 'antd';
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -6,15 +6,18 @@ import { mapValues } from 'lodash';
 import client from '../api/client';
 import { actions } from '../reducers/nominees/actions';
 import { NomineeForm } from '../components';
+import * as constants from '../api/constants';
+
+const FormItem = Form.Item;
 
 class NomineePage extends Component {
 
   componentWillMount = () => {
-    if (this.props.params.nomineeKey && this.props.params.nomineeKey != 'create') {
-      this.props.actions.getNominee(this.props.params.nomineeKey);
-    } else {
+    if (this.props.params.nomineeKey == 'create') {
       // Clear previous nominee
       this.props.actions.getNominee(null);
+    } else {
+      this.props.actions.getNominee(this.props.params.nomineeKey);
     }
   }
 
@@ -32,14 +35,19 @@ class NomineePage extends Component {
   render = () => (
     <div className="nominee-page">
       <Form>
-        <h1>
-          Nomination Form
-          {
-            this.props.nominee.status == 'complete' ?
-            <Tag color="green" style={{ marginLeft: 20 }}>Complete</Tag> :
-            <Tag color="orange" style={{ marginLeft: 20 }}>Draft</Tag>
-          }
-        </h1>
+        <h1>Nomination Form</h1>
+
+        <FormItem
+          {...this.props.form.formItemLayout}
+          label="Draft"
+        >
+          {this.props.form.getFieldDecorator(constants.DRAFT, {
+            valuePropName: 'checked',
+            initialValue: true
+          })(
+            <Switch />
+          )}
+        </FormItem>
 
         <hr className="divider secondary" />
 
