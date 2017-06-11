@@ -38,9 +38,7 @@ class App extends Component {
       <div class="app">
         <Header user={user} />
 
-        <main class="container">
-          {this.props.children}
-        </main>
+        {this.props.children}
 
         <Footer />
       </div>

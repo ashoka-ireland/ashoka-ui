@@ -1,62 +1,104 @@
+import { notification, Tabs } from 'antd';
 import React, { Component, PropTypes } from 'react';
-import { browserHistory } from 'react-router';
-
-import { Form, Progress, Button, notification } from 'antd';
+import { bindActionCreators } from 'redux';
+import * as ReactSurvey from 'survey-react';
+import { connect } from 'react-redux';
+import { NomineeForm } from '../components';
+import { actions as nomineeActions } from '../reducers/nominees/actions';
+import { actions as surveyActions } from '../reducers/surveys/actions';
 import client from '../api/client';
-import { buildSurvey } from '../lib/survey/builder';
+import 'survey-react/survey.css';
 
-const formItemLayout = {
-  labelCol: {
-    xs: {span: 24},
-    sm: {span: 8},
-  },
-  wrapperCol: {
-    xs: {span: 24},
-    sm: {span: 12},
-  },
-};
+ReactSurvey.Survey.cssType = 'bootstrap';
+const TabPane = Tabs.TabPane;
+const actions = { ...nomineeActions, ...surveyActions };
 
 class SurveyPage extends Component {
 
-  submit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        client.createNominee(values).then(() => {
-          notification.success({title: 'Survey created correctly...'});
-          browserHistory.push('/surveys');
-        });
-      }
+  componentDidMount = () => {
+    this.props.actions.loadSurveyModel();
+    if (this.props.params.nomineeKey == 'create') {
+      // Clear previous profile
+      this.props.actions.getProfile(null);
+    } else {
+      this.props.actions.getProfile(this.props.params.surveyKey);
+    }
+  }
+
+  submitSurvey = ({ data }) => {
+    const { nominee, ...profile } = data; // eslint-disable-line
+
+    if (this.props.params.surveyKey) {
+      profile.key = this.props.params.surveyKey;
+    }
+
+    client.saveSurvey(this.props.profileNominee.id, profile).then(() => {
+      notification.success({title: 'Survey saved!'});
     });
   }
 
-  render = () => (
-    <div class="home-page">
-      <h1 class="text-center">Ashoka Changemaker Questionnaire</h1>
-      <br />
-      <hr class="divider"/>
-      <h2 class="slogan"><Progress percent={30}/></h2>
+  submitNominee = (nominee) => {
+    if (this.props.profileNominee.id) {
+      nominee.key = this.props.profileNominee.id;
+    }
 
-      <Form>
+    this.props.actions.saveNominee(nominee);
+    notification.success({title: 'Nominee saved!'});
+  }
 
-        { buildSurvey(formItemLayout, this.props.form) }
+  render = () => {
+    const { survey, profile, profileNominee } = this.props;
+    const model = new ReactSurvey.Model(survey);
+    model.onComplete.add(this.submitSurvey);
+    model.data = profile;
+
+    const tabs = [
+      <TabPane tab="Organization 1" key="1">TODO: Org Form</TabPane>,
+      <TabPane tab="Organization 2" key="2">TODO: Org Form</TabPane>,
+      <TabPane tab="Organization 3" key="3">TODO: Org Form</TabPane>
+    ];
+
+    return (
+      <main class="container">
+        <h2>Nominee Details</h2>
+
+        <NomineeForm onSubmit={this.submitNominee} nominee={profileNominee} />
 
         <hr className="divider" />
 
-        <Button type="primary"
-                htmlType="submit"
-                onClick={this.submit}
-                size="large">
-          Submit
-        </Button>
-      </Form>
+        <h2>Organization Details</h2>
+        <Tabs defaultActiveKey="1">
+          {tabs}
+        </Tabs>
+        {/*<OrganisationForm key='org-form' formItemLayout={formItemLayout} form={form} />*/}
 
-    </div>
-  )
+        <hr className="divider" />
+
+        <ReactSurvey.Survey model={model} />
+
+      </main>
+    );
+  }
+
 }
 
 SurveyPage.propTypes = {
-  form: PropTypes.object
+  form: PropTypes.object,
+  survey: PropTypes.object,
+  profile: PropTypes.object,
+  profileNominee: PropTypes.object,
+  profileOrganizations: PropTypes.array
 };
 
-export default Form.create()(SurveyPage);
+const mapStateToProps = (state) => ({
+  survey: state.survey,
+  profile: state.profile,
+  profileNominee: state.profileNominee,
+  profileOrganizations: state.profileOrganizations
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(actions, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SurveyPage);

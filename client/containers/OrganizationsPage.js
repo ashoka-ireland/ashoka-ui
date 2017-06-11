@@ -47,7 +47,7 @@ class OrganizationsPage extends Component {
 
   render() {
     return (
-      <div>
+      <main class="container">
         <div class="table-operations">
           <div className="search-row">
             <Input.Search
@@ -62,7 +62,7 @@ class OrganizationsPage extends Component {
         </div>
 
         <Table columns={columns} dataSource={this.props.organizations} />
-      </div>
+      </main>
     );
   }
 }

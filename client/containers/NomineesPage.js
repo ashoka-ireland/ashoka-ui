@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Table, Input, Button, Tag } from 'antd';
 import { Link, browserHistory } from 'react-router';
 import { actions } from '../reducers/nominees/actions';
-//import { questionnaire } from '../lib/survey/questionnaire';
 
 const columns = [{
   title: 'Name',
@@ -75,7 +74,7 @@ class NomineesPage extends Component {
     }
 
     return (
-      <div>
+      <main class="container">
         <div class="table-operations">
           <div className="search-row">
             <Input.Search
@@ -92,7 +91,7 @@ class NomineesPage extends Component {
         </div>
 
         <Table columns={columns} dataSource={data} />
-      </div>
+      </main>
     );
   }
 }

@@ -48,10 +48,12 @@
     "antd": "2.5.2",
     "babel-plugin-react-html-attrs": "^2.0.0",
     "babel-polyfill": "^6.23.0",
+    "bootstrap": "^3.3.7",
     "express": "~4.14.0",
     "express-http-proxy": "~0.10.0",
     "firebase": "^3.9.0",
     "lodash": "4.17.4",
+    "jquery": "^2.1.0",
     "normalizr": "2.3.0",
     "prop-types": "^15.5.9",
     "react": "15.3.2",
@@ -61,6 +63,8 @@
     "react-router-redux": "4.0.6",
     "redux": "3.6.0",
     "redux-thunk": "2.1.0",
+    "survey-react": "^0.12.17",
+    "surveyjs-editor": "^0.12.17",
     "world-countries": "^1.8.1"
   },
   "devDependencies": {

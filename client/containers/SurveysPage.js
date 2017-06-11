@@ -38,7 +38,7 @@ class SurveysPage extends Component {
   }
 
   addSurvey = () => {
-    browserHistory.push('/survey');
+    browserHistory.push('/surveys/create');
   };
 
   onSearch = (evt) => {
@@ -53,7 +53,7 @@ class SurveysPage extends Component {
 
   render() {
     return (
-      <div>
+      <main class="container">
         <div class="table-operations">
           <div className="search-row">
             <Input.Search
@@ -68,7 +68,7 @@ class SurveysPage extends Component {
         </div>
 
         <Table columns={columns} dataSource={this.props.surveys} />
-      </div>
+      </main>
     );
   }
 }
@@ -96,4 +96,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(SurveysPage);
-

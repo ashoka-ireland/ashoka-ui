@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { mapValues } from 'lodash';
 import client from '../api/client';
 import { actions } from '../reducers/nominees/actions';
-import { NomineeForm } from '../components';
+import { NomineeFormItems } from '../components';
 import * as constants from '../api/constants';
 
 const FormItem = Form.Item;
@@ -33,49 +33,51 @@ class NomineePage extends Component {
   }
 
   render = () => (
-    <div className="nominee-page">
-      <Form>
-        <h1>Nomination Form</h1>
+    <main class="container">
+      <div className="nominee-page">
+        <Form>
+          <h1>Nomination Form</h1>
 
-        <FormItem
-          {...this.props.form.formItemLayout}
-          label="Draft"
-        >
-          { this.props.form.getFieldDecorator(constants.DRAFT, {
-            valuePropName: 'checked',
-            initialValue: true
-          })(
-            <Switch />
-          )}
-        </FormItem>
+          <FormItem
+            {...this.props.form.formItemLayout}
+            label="Draft"
+          >
+            { this.props.form.getFieldDecorator(constants.DRAFT, {
+              valuePropName: 'checked',
+              initialValue: true
+            })(
+              <Switch />
+            )}
+          </FormItem>
 
-        <hr className="divider secondary" />
+          <hr className="divider secondary" />
 
-        <NomineeForm form={this.props.form} requireFields={false} />
+          <NomineeFormItems form={this.props.form} requireFields={false} />
 
-        <FormItem
-          {...this.props.form.formItemLayout}
-          label="Additional Notes"
-        >
-          { this.props.form.getFieldDecorator(constants.ADDITIONAL_NOMINEE_INFO)(
-              <Input type="textarea" rows={3} />
-            )
-          }
-        </FormItem>
+          <FormItem
+            {...this.props.form.formItemLayout}
+            label="Additional Notes"
+          >
+            { this.props.form.getFieldDecorator(constants.ADDITIONAL_NOMINEE_INFO)(
+                <Input type="textarea" rows={3} />
+              )
+            }
+          </FormItem>
 
-        <hr className="divider secondary" />
+          <hr className="divider secondary" />
 
-        <Row>
-          <Button type="primary"
-                  htmlType="submit"
-                  onClick={this.submit}
-                  style={{ marginLeft: 20 }}
-                  size="large">
-            Save Nominee
-          </Button>
-        </Row>
-      </Form>
-    </div>
+          <Row>
+            <Button type="primary"
+                    htmlType="submit"
+                    onClick={this.submit}
+                    style={{ marginLeft: 20 }}
+                    size="large">
+              Save Nominee
+            </Button>
+          </Row>
+        </Form>
+      </div>
+    </main>
   )
 }
 

@@ -1,19 +1,11 @@
-import React, {
-  Component,
-} from 'react';
-
+import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
-
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
 import { notification } from 'antd';
-
-import { actions } from '../reducers/organizations/actions';
-
 import client from 'api/client';
-
 import { OrganizationDetailsForm } from 'components';
+import { actions } from '../reducers/organizations/actions';
 
 class OrganizationPage extends Component {
   componentDidMount() {
@@ -36,7 +28,9 @@ class OrganizationPage extends Component {
 
   render() {
     return (
-      <OrganizationDetailsForm onSave={this.save} organization={this.props.organization} />
+      <main class="container">
+        <OrganizationDetailsForm onSave={this.save} organization={this.props.organization} />
+      </main>
     );
   }
 }
