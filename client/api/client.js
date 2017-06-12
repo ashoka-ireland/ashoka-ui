@@ -1,12 +1,15 @@
-import firebase from 'firebase/app';
 import { omitBy, isUndefined, lowerCase, forEach, reduce } from 'lodash';
+import firebase from 'firebase/app';
+import Promise from 'bluebird';
 import * as constants from './constants';
 import 'firebase/auth';
 import 'firebase/database';
 
 const SURVEYS_PATH = '/surveys';
+const SURVEY_MODEL_PATH = '/survey-model';
 const NOMINEES_PATH = '/nominees';
 const ORGANIZATIONS_PATH = '/organizations';
+const NOMINEE_ORGANIZATIONS_PATH = '/nominee-organizations';
 
 const config = {
   apiKey: 'AIzaSyCQnvhtra0swrYaGvwSFiavtkKwdwSQd6g',
@@ -105,15 +108,70 @@ class apiClient {
 
     const response = reduce(surveys, (result, value, key) => {
       if(users.hasOwnProperty(value.nomineeId)){
-        result[key] = {
-          ...value
-        };
+        result[key] = { ...value };
       }
-
       return result;
     }, {});
 
     return {response};
+  };
+
+  saveSurvey = (nomineeId, survey) => {
+    const ref = firebase.database().ref();
+    let data;
+    let profileId;
+    if(survey.hasOwnProperty('key')) {
+      const { key, ...surveyDetails } = survey; // eslint-disable-line
+      profileId = key;
+      data = surveyValues(surveyDetails, nomineeId, profileId);
+    } else {
+      profileId = ref.push().key;
+      data = surveyValues(survey, nomineeId, profileId);
+    }
+    return ref.update(data).then(() => (profileId));
+  }
+
+  getProfile = async (profileId) => {
+    const ref = firebase.database().ref(`${SURVEYS_PATH}/${profileId}`);
+    return ref.once('value').then(response => {
+      const profile = response.val();
+      if (profile) {
+        return this.getNominee(profile.nomineeId).then(nominee => {
+          profile.nominee = nominee.response;
+          return this.listNomineeOrganizations(nominee.id).then(orgs => {
+            profile.organizations = orgs.response;
+            return { response: profile };
+          });
+        });
+      }
+      return { response: profile };
+    });
+  };
+
+  loadSurveyModel = async () => {
+    const ref = firebase.database().ref(SURVEY_MODEL_PATH);
+    const response = await ref.once('value').then(value => value.val());
+    return { response };
+  }
+
+  saveSurveyModel = (surveyModel) => {
+    const ref = firebase.database().ref(SURVEY_MODEL_PATH);
+    return ref.set(surveyModel);
+  }
+
+  saveNominee = (details) => {
+    const ref = firebase.database().ref();
+    let data;
+    let nomineeId;
+    if(details.hasOwnProperty('key')) {
+      const { key, ...nomineeDetails } = details; // eslint-disable-line
+      nomineeId = key;
+      data = nomineeValues(nomineeDetails, nomineeId);
+    } else {
+      nomineeId = ref.push().key;
+      data = nomineeValues(details, nomineeId);
+    }
+    return ref.update(data).then(() => (nomineeId));
   };
 
   createNominee = (details) => {
@@ -125,14 +183,10 @@ class apiClient {
       nomineeId = key;
       data = nomineeValues(nomineeDetails, nomineeId);
     } else {
-      const profileId = ref.push().key;
       nomineeId = ref.push().key;
-      data = {
-        ...nomineeValues(details, nomineeId),
-        ...surveyValues(details, nomineeId, profileId)
-      };
+      data = nomineeValues(details, nomineeId);
     }
-    return ref.update(data).then(() => (nomineeId));
+    return ref.update(data).then(() => ({ response: details }));
   };
 
   getNominee = (nomineeId) => {
@@ -203,11 +257,18 @@ class apiClient {
       .startAt(query)
       .endAt(`${query}\u{f8ff}`)
       .once('value')
-      .then(response => {
-        console.log('Response for query', query, response.val());
-        return ({ response: response.val() });
-      });
+      .then(response => ({ response: response.val() }));
   };
+
+  listNomineeOrganizations = (nomineeId) => {
+    const ref = firebase.database().ref(`${NOMINEE_ORGANIZATIONS_PATH}/${nomineeId}`);
+    return ref.once('value').then(response => {
+      const orgIds = response.val() || [];
+      return Promise.map(orgIds, this.getOrganization)
+              .then(orgs => ({ response: orgs.map(o => o.response) }));
+    });
+  };
+
 }
 
 const client = new apiClient();

@@ -36,6 +36,11 @@ module.exports = {
     filename: 'bundle.js'
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      jQuery: 'jquery',
+      $: 'jquery',
+      jquery: 'jquery'
+    }),
     new webpack.DefinePlugin({
       'process.env.API_KEY': JSON.stringify(process.env.API_KEY),
       'process.env.USER_PASSWORD': JSON.stringify(process.env.USER_PASSWORD),

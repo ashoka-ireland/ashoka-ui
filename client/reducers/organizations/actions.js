@@ -16,4 +16,3 @@ export const actions = {
   getOrganization: (params) => fetchEntity(events.getOrganization, client.getOrganization, params),
   searchOrganizations: (query) => fetchEntity(events.searchOrganizations, client.searchOrganizations, query)
 };
-

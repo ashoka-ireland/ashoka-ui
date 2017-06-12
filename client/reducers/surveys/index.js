@@ -18,3 +18,21 @@ export const surveys = createReducer([], {
     }));
   }
 });
+
+const DefaultSurvey = {
+  title: 'Ashoka Changemaker Questionnaire',
+  showProgressBar: 'top',
+  pages: []
+};
+
+export const profile = createReducer({}, {
+  [ActionTypes.SURVEY_GET.SUCCESS]: (state, action) => {
+    return action.response;
+  }
+});
+
+export const survey = createReducer(DefaultSurvey, {
+  [ActionTypes.SURVEY_MODEL_LOAD.SUCCESS]: (state, action) => {
+    return action.response;
+  }
+});

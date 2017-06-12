@@ -10,6 +10,7 @@ import {
   App,
   SurveyPage,
   SurveysPage,
+  SurveyEditorPage,
   NotFound,
   LoginPage,
   NomineePage,
@@ -42,7 +43,8 @@ export default (
     <Route path="/" component={App} onEnter={isAuthenticated}>
       <IndexRedirect to="nominees" />
       <Route path="surveys" component={SurveysPage} />
-      <Route path="survey" component={SurveyPage} />
+      <Route path="surveys/:surveyKey" component={SurveyPage} />
+      <Route path="survey-editor" component={SurveyEditorPage} />
       <Route path="nominees" component={NomineesPage} />
       <Route path="nominees/:nomineeKey" component={NomineePage} />
       <Route path="organizations(/:organizationKey)" component={OrganizationPages} />

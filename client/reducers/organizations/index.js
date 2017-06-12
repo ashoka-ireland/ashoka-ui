@@ -1,3 +1,4 @@
+import * as SurveyActionTypes from '../surveys/actions';
 import createReducer from '../createReducer';
 import * as ActionTypes from './actions';
 import { map, toPairs } from 'lodash';
@@ -28,3 +29,8 @@ export const organization = createReducer({}, {
   }
 });
 
+export const profileOrganizations = createReducer([], {
+  [SurveyActionTypes.SURVEY_GET.SUCCESS]: (state, action) => {
+    return action.response.organizations;
+  }
+});
