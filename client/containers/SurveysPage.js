@@ -15,7 +15,8 @@ const columns = [
   {
     dataIndex: 'key',
     key: 'key',
-    title: 'Survey Id'
+    title: 'Survey Id',
+    render: (text, record) => <Link to={`/surveys/${record.key}`}> {text} </Link>
   },
   {
     dataIndex: 'user.firstName',
