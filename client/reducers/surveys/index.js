@@ -36,3 +36,9 @@ export const survey = createReducer(DefaultSurvey, {
     return action.response;
   }
 });
+
+export const surveyOrgModel = createReducer({ pages: [] }, {
+  [ActionTypes.SURVEY_ORG_MODEL_LOAD.SUCCESS]: (state, action) => {
+    return action.response;
+  }
+});

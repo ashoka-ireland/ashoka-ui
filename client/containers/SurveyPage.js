@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import * as ReactSurvey from 'survey-react';
 import { connect } from 'react-redux';
-import { NomineeForm } from '../components';
+import { NomineeForm, OrganisationForm } from '../components';
 import { actions as nomineeActions } from '../reducers/nominees/actions';
 import { actions as surveyActions } from '../reducers/surveys/actions';
 import client from '../api/client';
@@ -17,7 +17,8 @@ class SurveyPage extends Component {
 
   componentDidMount = () => {
     this.props.actions.loadSurveyModel();
-    if (this.props.params.nomineeKey == 'create') {
+    this.props.actions.loadSurveyOrgModel();
+    if (this.props.params.surveyKey == 'create') {
       // Clear previous profile
       this.props.actions.getProfile(null);
     } else {
@@ -37,6 +38,19 @@ class SurveyPage extends Component {
     });
   }
 
+  submitOrgSurvey = (orgName) => {
+    return ({ data}) => {
+      console.log(orgName, data);
+      const profile = { [orgName]: data };
+      if (this.props.params.surveyKey) {
+        profile.key = this.props.params.surveyKey;
+      }
+      client.saveSurvey(this.props.profileNominee.id, profile).then(() => {
+        notification.success({title: 'Survey saved!'});
+      });
+    };
+  }
+
   submitNominee = (nominee) => {
     if (this.props.profileNominee.id) {
       nominee.key = this.props.profileNominee.id;
@@ -47,16 +61,27 @@ class SurveyPage extends Component {
   }
 
   render = () => {
-    const { survey, profile, profileNominee } = this.props;
+    const {
+      survey,
+      surveyOrgModel,
+      profile,
+      profileNominee,
+      nomineeOrganizations
+    } = this.props;
+
     const model = new ReactSurvey.Model(survey);
     model.onComplete.add(this.submitSurvey);
     model.data = profile;
 
-    const tabs = [
-      <TabPane tab="Organization 1" key="1">TODO: Org Form</TabPane>,
-      <TabPane tab="Organization 2" key="2">TODO: Org Form</TabPane>,
-      <TabPane tab="Organization 3" key="3">TODO: Org Form</TabPane>
-    ];
+    const tabs = nomineeOrganizations.map((org, idx) => (
+      <TabPane tab={org} key={idx}>
+        <OrganisationForm
+          orgName={org}
+          orgProfile={profile[org] || {}}
+          surveyOrgModel={surveyOrgModel}
+          submitOrgSurvey={this.submitOrgSurvey} />
+      </TabPane>
+    ));
 
     return (
       <main class="container">
@@ -66,15 +91,14 @@ class SurveyPage extends Component {
 
         <hr className="divider" />
 
-        <h2>Organization Details</h2>
-        <Tabs defaultActiveKey="1">
-          {tabs}
-        </Tabs>
-        {/*<OrganisationForm key='org-form' formItemLayout={formItemLayout} form={form} />*/}
+        <ReactSurvey.Survey model={model} />
 
         <hr className="divider" />
 
-        <ReactSurvey.Survey model={model} />
+        <h2>Organization Details</h2>
+        <Tabs defaultActiveKey="0">
+          {tabs}
+        </Tabs>
 
       </main>
     );
@@ -85,16 +109,18 @@ class SurveyPage extends Component {
 SurveyPage.propTypes = {
   form: PropTypes.object,
   survey: PropTypes.object,
+  surveyOrgModel: PropTypes.object,
   profile: PropTypes.object,
   profileNominee: PropTypes.object,
-  profileOrganizations: PropTypes.array
+  nomineeOrganizations: PropTypes.array
 };
 
 const mapStateToProps = (state) => ({
   survey: state.survey,
+  surveyOrgModel: state.surveyOrgModel,
   profile: state.profile,
   profileNominee: state.profileNominee,
-  profileOrganizations: state.profileOrganizations
+  nomineeOrganizations: state.nomineeOrganizations
 });
 
 const mapDispatchToProps = (dispatch) => ({

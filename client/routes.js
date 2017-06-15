@@ -45,6 +45,7 @@ export default (
       <Route path="surveys" component={SurveysPage} />
       <Route path="surveys/:surveyKey" component={SurveyPage} />
       <Route path="survey-editor" component={SurveyEditorPage} />
+      <Route path="survey-org-editor" component={SurveyEditorPage} />
       <Route path="nominees" component={NomineesPage} />
       <Route path="nominees/:nomineeKey" component={NomineePage} />
       <Route path="organizations(/:organizationKey)" component={OrganizationPages} />

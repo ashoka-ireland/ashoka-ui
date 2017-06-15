@@ -1,4 +1,5 @@
 import * as SurveyActionTypes from '../surveys/actions';
+import * as NomineeActionTypes from '../nominees/actions';
 import createReducer from '../createReducer';
 import * as ActionTypes from './actions';
 import { map, toPairs } from 'lodash';
@@ -29,8 +30,14 @@ export const organization = createReducer({}, {
   }
 });
 
-export const profileOrganizations = createReducer([], {
+export const nomineeOrganizations = createReducer([], {
+  [NomineeActionTypes.NOMINEE_GET.SUCCESS]: (state, action) => {
+    return action.response.orgs;
+  },
+  [ActionTypes.NOMINEE_ORGANIZATION_SAVE.SUCCESS]: (state, action) => {
+    return action.response;
+  },
   [SurveyActionTypes.SURVEY_GET.SUCCESS]: (state, action) => {
-    return action.response.organizations;
+    return action.response.orgs;
   }
 });

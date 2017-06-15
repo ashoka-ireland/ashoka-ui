@@ -15,8 +15,12 @@ class SurveyEditorPage extends Component {
   }
 
   componentDidMount = () => {
-    this.props.actions.loadSurveyModel();
-    this.editor = new SurveyJSEditor.SurveyEditor('surveyEditorContainer', { isAutoSave: true });
+    if(location.pathname.indexOf('survey-org-editor') > -1) {
+      this.props.actions.loadSurveyOrgModel();
+    } else {
+      this.props.actions.loadSurveyModel();
+    }
+    this.editor = new SurveyJSEditor.SurveyEditor('surveyEditorContainer', {});
     this.editor.saveSurveyFunc = this.submitSurveyModel;
   }
 
@@ -24,15 +28,27 @@ class SurveyEditorPage extends Component {
     let model;
     eval(`model = ${this.editor.text}`);
     console.log(model);
-    client.saveSurveyModel(model).then(() => {
-      notification.success({title: 'Survey created correctly...'});
-    });
+    if (location.pathname.indexOf('survey-org-editor') > -1) {
+      client.saveSurveyOrgModel(model).then(() => {
+        notification.success({title: 'Survey Org created correctly...'});
+      });
+    } else {
+      client.saveSurveyModel(model).then(() => {
+        notification.success({title: 'Survey created correctly...'});
+      });
+    }
   }
 
   render = () => {
+    const orgModel = location.pathname.indexOf('survey-org-editor') > -1;
+    let survey = this.props.survey;
+    if (orgModel) {
+      survey = this.props.surveyOrgModel;
+    }
+
     if (this.editor) {
-      console.log('Render Survey: ', this.props.survey);
-      this.editor.changeText(JSON.stringify(this.props.survey), true);
+      console.log('Render Survey: ', survey);
+      this.editor.changeText(JSON.stringify(survey), true);
     }
 
     return <div id="surveyEditorContainer" />;
@@ -41,11 +57,16 @@ class SurveyEditorPage extends Component {
 }
 
 SurveyEditorPage.propTypes = {
-  survey: PropTypes.object
+  survey: PropTypes.object,
+  surveyOrgModel: PropTypes.object,
+  location: PropTypes.shape({
+    pathname: PropTypes.string
+  })
 };
 
 const mapStateToProps = (state) => ({
   survey: state.survey,
+  surveyOrgModel: state.surveyOrgModel
 });
 
 const mapDispatchToProps = (dispatch) => ({

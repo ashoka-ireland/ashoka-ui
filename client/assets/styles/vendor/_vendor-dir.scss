@@ -5,3 +5,9 @@ Files inside this folder can contain vendor css and their overrides.
 
 // Antd
 @import 'antd/antd-dir';
+
+// Font Awesome
+$fa-font-path: '~font-awesome/fonts';
+@import '~font-awesome/scss/font-awesome';
+
+@import '~react-dual-listbox/src/scss/react-dual-listbox';

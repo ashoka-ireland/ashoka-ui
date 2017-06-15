@@ -7,6 +7,7 @@ import 'firebase/database';
 
 const SURVEYS_PATH = '/surveys';
 const SURVEY_MODEL_PATH = '/survey-model';
+const SURVEY_ORG_MODEL_PATH = '/survey-org-model';
 const NOMINEES_PATH = '/nominees';
 const ORGANIZATIONS_PATH = '/organizations';
 const NOMINEE_ORGANIZATIONS_PATH = '/nominee-organizations';
@@ -47,7 +48,7 @@ const surveyValues = (availableValues, nomineeId, profileId) => {
 const organizationValue = (organization, organizationId) => {
   const data = {};
   forEach(organization, (value, key) => {
-    data[`${ORGANIZATIONS_PATH}/${organizationId}/${key}`] = value;
+    data[`${ORGANIZATIONS_PATH}/${organizationId}/${key}`] = value.trim();
   });
 
   return data;
@@ -138,10 +139,8 @@ class apiClient {
       if (profile) {
         return this.getNominee(profile.nomineeId).then(nominee => {
           profile.nominee = nominee.response;
-          return this.listNomineeOrganizations(nominee.id).then(orgs => {
-            profile.organizations = orgs.response;
-            return { response: profile };
-          });
+          profile.orgs = nominee.response.orgs;
+          return { response: profile };
         });
       }
       return { response: profile };
@@ -157,6 +156,17 @@ class apiClient {
   saveSurveyModel = (surveyModel) => {
     const ref = firebase.database().ref(SURVEY_MODEL_PATH);
     return ref.set(surveyModel);
+  }
+
+  loadSurveyOrgModel = async () => {
+    const ref = firebase.database().ref(SURVEY_ORG_MODEL_PATH);
+    const response = await ref.once('value').then(value => value.val());
+    return { response };
+  }
+
+  saveSurveyOrgModel = (surveyOrgModel) => {
+    const ref = firebase.database().ref(SURVEY_ORG_MODEL_PATH);
+    return ref.set(surveyOrgModel);
   }
 
   saveNominee = (details) => {
@@ -191,7 +201,13 @@ class apiClient {
 
   getNominee = (nomineeId) => {
     const ref = firebase.database().ref(`${NOMINEES_PATH}/${nomineeId}`);
-    return ref.once('value').then(response => ({ response: response.val() }));
+    return ref.once('value').then(response => {
+      const nominee = response.val();
+      return this.listNomineeOrganizations(nominee.id).then(orgs => {
+        nominee.orgs = orgs.response;
+        return { response: nominee };
+      });
+    });
   };
 
   listNominees = (cursor = null) => {
@@ -262,11 +278,12 @@ class apiClient {
 
   listNomineeOrganizations = (nomineeId) => {
     const ref = firebase.database().ref(`${NOMINEE_ORGANIZATIONS_PATH}/${nomineeId}`);
-    return ref.once('value').then(response => {
-      const orgIds = response.val() || [];
-      return Promise.map(orgIds, this.getOrganization)
-              .then(orgs => ({ response: orgs.map(o => o.response) }));
-    });
+    return ref.once('value').then(response => ({ response: response.val() }));
+  };
+
+  saveNomineeOrganizations = ({ nomineeId, orgs }) => {
+    const ref = firebase.database().ref(`${NOMINEE_ORGANIZATIONS_PATH}/${nomineeId}`);
+    return ref.set(orgs).then(() => ({ response: orgs }));
   };
 
 }

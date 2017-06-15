@@ -19,3 +19,12 @@
     align-self: auto;
   }
 }
+
+.nominee-org-labels {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-content: space-between;
+  align-items: stretch;
+}
