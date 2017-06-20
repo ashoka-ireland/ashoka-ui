@@ -129,7 +129,7 @@ NomineePage.propTypes = {
 const mapStateToProps = (state) => ({
   nominee: state.nominee,
   organizations: state.organizations,
-  nomineeOrganizations: state.nomineeOrganizations
+  nomineeOrganizations: state.nomineeOrganizations || []
 });
 
 const mapDispatchToProps = (dispatch) => ({
