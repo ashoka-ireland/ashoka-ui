@@ -42,3 +42,9 @@ export const surveyOrgModel = createReducer({ pages: [] }, {
     return action.response;
   }
 });
+
+export const nomineeProfiles = createReducer([], {
+  [ActionTypes.SURVEY_NOMINEES_LIST.SUCCESS]: (state, action) => {
+    return action.response;
+  }
+});

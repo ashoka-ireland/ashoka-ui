@@ -14,11 +14,12 @@ ReactSurvey.Survey.cssType = 'bootstrap';
 const TabPane = Tabs.TabPane;
 const actions = { ...nomineeActions, ...surveyActions };
 
-class SurveyPage extends Component {
+class NomineeSurveyPage extends Component {
 
   componentDidMount = () => {
     this.props.actions.loadSurveyModel();
     this.props.actions.loadSurveyOrgModel();
+    this.props.actions.getNominee(this.props.params.nomineeKey);
     if (this.props.params.surveyKey == 'create') {
       // Clear previous profile
       this.props.actions.getProfile(null);
@@ -107,7 +108,7 @@ class SurveyPage extends Component {
 
 }
 
-SurveyPage.propTypes = {
+NomineeSurveyPage.propTypes = {
   form: PropTypes.object,
   survey: PropTypes.object,
   surveyOrgModel: PropTypes.object,
@@ -128,4 +129,4 @@ const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators(actions, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SurveyPage);
+export default connect(mapStateToProps, mapDispatchToProps)(NomineeSurveyPage);

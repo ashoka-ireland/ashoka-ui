@@ -7,6 +7,7 @@ export const SURVEY_LIST = createRequestTypes('SURVEY_LIST');
 export const SURVEY_SEARCH = createRequestTypes('SURVEY_SEARCH');
 export const SURVEY_MODEL_LOAD = createRequestTypes('SURVEY_MODEL_LOAD');
 export const SURVEY_ORG_MODEL_LOAD = createRequestTypes('SURVEY_ORG_MODEL_LOAD');
+export const SURVEY_NOMINEES_LIST = createRequestTypes('SURVEY_NOMINEES_LIST');
 
 export const events = {
   getProfile: createRequestActions(SURVEY_GET),
@@ -14,7 +15,8 @@ export const events = {
   listSurveys: createRequestActions(SURVEY_LIST),
   searchSurveys: createRequestActions(SURVEY_SEARCH),
   loadSurveyModel: createRequestActions(SURVEY_MODEL_LOAD),
-  loadSurveyOrgModel: createRequestActions(SURVEY_ORG_MODEL_LOAD)
+  loadSurveyOrgModel: createRequestActions(SURVEY_ORG_MODEL_LOAD),
+  listNomineeSurveys: createRequestActions(SURVEY_NOMINEES_LIST)
 };
 
 export const actions = {
@@ -24,4 +26,5 @@ export const actions = {
   searchSurveys: (params) => fetchEntity(events.searchSurveys, client.searchSurveys, params),
   loadSurveyModel: (params) => fetchEntity(events.loadSurveyModel, client.loadSurveyModel, params),
   loadSurveyOrgModel: (params) => fetchEntity(events.loadSurveyOrgModel, client.loadSurveyOrgModel, params),
+  listNomineeSurveys: (params) => fetchEntity(events.listNomineeSurveys, client.listNomineeSurveys, params),
 };

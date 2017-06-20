@@ -2,6 +2,7 @@ export App from './App';
 export SurveyPage from './SurveyPage';
 export SurveysPage from './SurveysPage';
 export SurveyEditorPage from './SurveyEditorPage';
+export NomineeSurveyPage from './NomineeSurveyPage';
 export NotFound from './NotFound';
 export LoginPage from './LoginPage';
 export NomineesPage from './NomineesPage';

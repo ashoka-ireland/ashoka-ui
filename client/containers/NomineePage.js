@@ -1,5 +1,6 @@
-import { Form, Button, Row, Switch, Input } from 'antd';
+import { Form, Button, Row, Switch, Input, Table } from 'antd';
 import React, { Component, PropTypes } from 'react';
+import { browserHistory } from 'react-router';
 import DualListBox from 'react-dual-listbox';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -7,11 +8,22 @@ import { map, mapValues } from 'lodash';
 import client from '../api/client';
 import { actions as nomineeActions } from '../reducers/nominees/actions';
 import { actions as orgActions } from '../reducers/organizations/actions';
+import { actions as surveyActions } from '../reducers/surveys/actions';
 import { NomineeFormItems } from '../components';
 import * as constants from '../api/constants';
 
-const actions = { ...nomineeActions, ...orgActions };
+const actions = { ...nomineeActions, ...orgActions, ...surveyActions };
 const FormItem = Form.Item;
+const columns = [{
+  dataIndex: 'key',
+  key: 'key',
+  title: 'Survey Id',
+  render: (text, record) => (
+    <Link to={`/nominees/${record.nomineeId}/surveys/${record.key}`}>
+      {text}
+    </Link>
+  )
+}];
 
 class NomineePage extends Component {
 
@@ -19,10 +31,17 @@ class NomineePage extends Component {
     if (this.props.params.nomineeKey == 'create') {
       // Clear previous nominee
       this.props.actions.getNominee(null);
+      this.props.actions.listNomineeSurveys(null);
     } else {
       this.props.actions.getNominee(this.props.params.nomineeKey);
+      this.props.actions.listNomineeSurveys(this.props.params.nomineeKey);
     }
     this.props.actions.listOrganizations();
+  }
+
+  addSurvey = (e) => {
+    e.preventDefault();
+    browserHistory.push(`/nominees/${this.props.params.nomineeKey}/survey/create`);
   }
 
   submit = (e) => {
@@ -107,6 +126,14 @@ class NomineePage extends Component {
             selected={this.props.nomineeOrganizations}
             onChange={this.saveNomineeOrgs}
           />
+
+          <hr className="divider" />
+
+          <h2>Nominee Surveys</h2>
+          <Button type="primary" icon="plus" onClick={this.addSurvey} >
+            Add Survey
+          </Button>
+          <Table columns={columns} dataSource={this.props.nomineeProfiles} />
         </div>
       </main>
     );
@@ -115,6 +142,7 @@ class NomineePage extends Component {
 
 NomineePage.propTypes = {
   nominee: PropTypes.object,
+  nomineeProfiles: PropTypes.array.isRequired,
   organizations: PropTypes.array.isRequired,
   nomineeOrganizations: PropTypes.array.isRequired,
   params: PropTypes.shape({
@@ -128,6 +156,7 @@ NomineePage.propTypes = {
 
 const mapStateToProps = (state) => ({
   nominee: state.nominee,
+  nomineeProfiles: state.nomineeProfiles || [],
   organizations: state.organizations,
   nomineeOrganizations: state.nomineeOrganizations || []
 });

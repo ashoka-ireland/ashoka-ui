@@ -1,4 +1,4 @@
-import { omitBy, isUndefined, lowerCase, forEach, reduce } from 'lodash';
+import { omitBy, isUndefined, lowerCase, forEach, reduce, filter } from 'lodash';
 import firebase from 'firebase/app';
 import Promise from 'bluebird';
 import * as constants from './constants';
@@ -115,6 +115,16 @@ class apiClient {
     }, {});
 
     return {response};
+  };
+
+  listNomineeSurveys = async (nomineeId) => {
+    const allSurveys = await this.listSurveys();
+    const surveys = filter(
+      allSurveys.response,
+      (survey) => survey.nomineeId === nomineeId
+    );
+
+    return { response: surveys };
   };
 
   saveSurvey = (nomineeId, survey) => {

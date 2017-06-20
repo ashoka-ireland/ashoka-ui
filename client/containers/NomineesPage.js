@@ -25,13 +25,13 @@ const columns = [{
     return <Tag color="green">Profile Complete</Tag>;
   }
 }, {
-  title: 'Interview Status',
+  title: 'Interview Nominee',
   key: 'interview',
-  render: () => {
-    // TODO: Check if user has a survey
-    // count the sections complete using questionnaire import
-    return <Tag color="blue">0% complete</Tag>;
-  }
+  render: (text, record) => (
+    <Link to={`/nominees/${record.key}/survey/create`}>
+      Interview Nominee
+    </Link>
+  )
 }];
 
 class NomineesPage extends Component {
