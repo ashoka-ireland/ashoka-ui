@@ -8,7 +8,6 @@ import { map } from 'lodash';
 import { NomineeForm, OrganisationForm } from '../components';
 import { actions as nomineeActions } from '../reducers/nominees/actions';
 import { actions as surveyActions } from '../reducers/surveys/actions';
-import client from '../api/client';
 import 'survey-react/survey.css';
 
 ReactSurvey.Survey.cssType = 'bootstrap';
@@ -33,6 +32,7 @@ class NomineeSurveyPage extends Component {
   }
 
   componentWillReceiveProps = (nextProps) => {
+    console.log(nextProps);
     if (this.props.params.surveyKey == 'create' && nextProps.profile.key) {
       browserHistory.push(
         `/nominees/${this.props.params.nomineeKey}/surveys/${nextProps.profile.key}`
@@ -41,28 +41,30 @@ class NomineeSurveyPage extends Component {
   }
 
   submitSurvey = ({ data }) => {
-    const { nominee, ...profile } = data; // eslint-disable-line
+    const { nominee, ...survey } = data; // eslint-disable-line
     const { surveyKey } = this.props.params;
+    const nomineeId = this.props.nominee.id;
 
     if (surveyKey && surveyKey != 'create') {
-      profile.key = surveyKey;
+      survey.key = surveyKey;
     }
 
-    client.saveSurvey(this.props.nominee.id, profile).then(() => {
+    this.props.actions.saveSurvey({ nomineeId, survey }).then(() => {
       notification.success({title: 'Survey saved!'});
     });
   }
 
   submitOrgSurvey = (orgName) => {
     return ({ data}) => {
-      const profile = { [orgName]: data };
+      const survey = { [orgName]: data };
       const { surveyKey } = this.props.params;
+      const nomineeId = this.props.nominee.id;
 
       if (surveyKey && surveyKey != 'create') {
-        profile.key = surveyKey;
+        survey.key = surveyKey;
       }
 
-      client.saveSurvey(this.props.nominee.id, profile).then(() => {
+      this.props.actions.saveSurvey({ nomineeId, survey }).then(() => {
         notification.success({title: 'Survey saved!'});
       });
     };

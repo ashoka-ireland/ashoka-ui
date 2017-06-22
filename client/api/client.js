@@ -127,7 +127,7 @@ class apiClient {
     return { response };
   };
 
-  saveSurvey = (nomineeId, survey) => {
+  saveSurvey = ({ nomineeId, survey }) => {
     const ref = firebase.database().ref();
     let data;
     let profileId;
@@ -139,13 +139,14 @@ class apiClient {
       profileId = ref.push().key;
       data = surveyValues(survey, nomineeId, profileId);
     }
-    return ref.update(data).then(() => (profileId));
+    return ref.update(data).then(() => this.getProfile(profileId));
   }
 
   getProfile = async (profileId) => {
     const ref = firebase.database().ref(`${SURVEYS_PATH}/${profileId}`);
     return ref.once('value').then(response => {
       const profile = response.val();
+      profile.key = profileId;
       if (profile) {
         return this.getNominee(profile.nomineeId).then(nominee => {
           profile.nominee = nominee.response;
