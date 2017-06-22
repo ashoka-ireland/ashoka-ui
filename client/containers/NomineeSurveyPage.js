@@ -30,9 +30,10 @@ class NomineeSurveyPage extends Component {
 
   submitSurvey = ({ data }) => {
     const { nominee, ...profile } = data; // eslint-disable-line
+    const { surveyKey } = this.props.params;
 
-    if (this.props.params.surveyKey) {
-      profile.key = this.props.params.surveyKey;
+    if (surveyKey && surveyKey != 'create') {
+      profile.key = surveyKey;
     }
 
     client.saveSurvey(this.props.nominee.id, profile).then(() => {
