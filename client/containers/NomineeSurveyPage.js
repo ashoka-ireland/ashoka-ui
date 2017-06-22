@@ -71,8 +71,8 @@ class NomineeSurveyPage extends Component {
   }
 
   submitNominee = (nominee) => {
-    if (this.props.nominee.id) {
-      nominee.key = this.props.nominee.id;
+    if (this.props.params.nomineeKey) {
+      nominee.key = this.props.params.nomineeKey;
     }
 
     this.props.actions.saveNominee(nominee);
