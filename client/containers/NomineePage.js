@@ -1,6 +1,6 @@
 import { Form, Button, Row, Switch, Input, Table } from 'antd';
 import React, { Component, PropTypes } from 'react';
-import { browserHistory } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import DualListBox from 'react-dual-listbox';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -20,7 +20,7 @@ const columns = [{
   title: 'Survey Id',
   render: (text, record) => (
     <Link to={`/nominees/${record.nomineeId}/surveys/${record.key}`}>
-      {text}
+      {record.key}
     </Link>
   )
 }];
@@ -41,7 +41,7 @@ class NomineePage extends Component {
 
   addSurvey = (e) => {
     e.preventDefault();
-    browserHistory.push(`/nominees/${this.props.params.nomineeKey}/survey/create`);
+    browserHistory.push(`/nominees/${this.props.params.nomineeKey}/surveys/create`);
   }
 
   submit = (e) => {

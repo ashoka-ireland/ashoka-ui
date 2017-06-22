@@ -1,6 +1,7 @@
-import { createRequestTypes, fetchEntity, createRequestActions } from '../actions';
+import { action, createRequestTypes, fetchEntity, createRequestActions } from '../actions';
 import client from 'api/client'; //eslint-disable-line
 
+export const SURVEY_CLEAR = 'SURVEY_CLEAR';
 export const SURVEY_GET = createRequestTypes('SURVEY_GET');
 export const SURVEY_SAVE = createRequestTypes('SURVEY_SAVE');
 export const SURVEY_LIST = createRequestTypes('SURVEY_LIST');
@@ -27,4 +28,7 @@ export const actions = {
   loadSurveyModel: (params) => fetchEntity(events.loadSurveyModel, client.loadSurveyModel, params),
   loadSurveyOrgModel: (params) => fetchEntity(events.loadSurveyOrgModel, client.loadSurveyOrgModel, params),
   listNomineeSurveys: (params) => fetchEntity(events.listNomineeSurveys, client.listNomineeSurveys, params),
+  clearProfile: () => async (dispatch) => {
+    dispatch(action(SURVEY_CLEAR, {}));
+  }
 };

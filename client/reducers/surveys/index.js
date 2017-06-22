@@ -26,6 +26,7 @@ const DefaultSurvey = {
 };
 
 export const profile = createReducer({}, {
+  [ActionTypes.SURVEY_CLEAR]: () => ({}),
   [ActionTypes.SURVEY_GET.SUCCESS]: (state, action) => {
     return action.response;
   }

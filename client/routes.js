@@ -41,12 +41,12 @@ export default (
 
     <Route path="/" component={App} onEnter={isAuthenticated}>
       <IndexRedirect to="nominees" />
-      <Route path="survey-editor" component={SurveyEditorPage} />
-      <Route path="survey-org-editor" component={SurveyEditorPage} />
-      <Route path="nominees" component={NomineesPage} />
-      <Route path="nominees/:nomineeKey" component={NomineePage} />
-      <Route path="nominees/:nomineeKey/survey/:surveyKey" component={NomineeSurveyPage} />
-      <Route path="organizations(/:organizationKey)" component={OrganizationPages} />
+      <Route path="/survey-editor" component={SurveyEditorPage} />
+      <Route path="/survey-org-editor" component={SurveyEditorPage} />
+      <Route path="/nominees" component={NomineesPage} />
+      <Route path="/nominees/:nomineeKey" component={NomineePage} />
+      <Route path="/nominees/:nomineeKey/surveys/:surveyKey" component={NomineeSurveyPage} />
+      <Route path="/organizations(/:organizationKey)" component={OrganizationPages} />
     </Route>
 
     <Route path="/*" component={NotFound} />

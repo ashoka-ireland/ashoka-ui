@@ -1,5 +1,6 @@
 import { notification, Tabs } from 'antd';
 import React, { Component, PropTypes } from 'react';
+import { browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import * as ReactSurvey from 'survey-react';
 import { connect } from 'react-redux';
@@ -16,15 +17,26 @@ const actions = { ...nomineeActions, ...surveyActions };
 
 class NomineeSurveyPage extends Component {
 
-  componentDidMount = () => {
+  componentWillMount = () => {
     this.props.actions.loadSurveyModel();
     this.props.actions.loadSurveyOrgModel();
     this.props.actions.getNominee(this.props.params.nomineeKey);
     if (this.props.params.surveyKey == 'create') {
-      // Clear previous profile
-      this.props.actions.getProfile(null);
+      this.props.actions.clearProfile();
     } else {
       this.props.actions.getProfile(this.props.params.surveyKey);
+    }
+  }
+
+  componentWillUnmount = () => {
+    this.props.actions.clearProfile();
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    if (this.props.params.surveyKey == 'create' && nextProps.profile.key) {
+      browserHistory.push(
+        `/nominees/${this.props.params.nomineeKey}/surveys/${nextProps.profile.key}`
+      );
     }
   }
 
@@ -43,11 +55,13 @@ class NomineeSurveyPage extends Component {
 
   submitOrgSurvey = (orgName) => {
     return ({ data}) => {
-      console.log(orgName, data);
       const profile = { [orgName]: data };
-      if (this.props.params.surveyKey) {
-        profile.key = this.props.params.surveyKey;
+      const { surveyKey } = this.props.params;
+
+      if (surveyKey && surveyKey != 'create') {
+        profile.key = surveyKey;
       }
+
       client.saveSurvey(this.props.nominee.id, profile).then(() => {
         notification.success({title: 'Survey saved!'});
       });

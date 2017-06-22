@@ -14,6 +14,7 @@ export const nomineesPage = createReducer([], {
 });
 
 export const nomineesSearchResults = createReducer([], {
+  [ActionTypes.NOMINEES_SEARCH_CLEAR]: () => [],
   [ActionTypes.NOMINEES_SEARCH.SUCCESS]: (state, action) => {
     const nominees = toPairs(action.response);
     return map(nominees, ([key, nominee]) => ({

@@ -1,4 +1,4 @@
-import { omitBy, isUndefined, lowerCase, forEach, reduce, filter } from 'lodash';
+import { omitBy, isUndefined, lowerCase, forEach, reduce, filter, map } from 'lodash';
 import firebase from 'firebase/app';
 import Promise from 'bluebird';
 import * as constants from './constants';
@@ -119,12 +119,12 @@ class apiClient {
 
   listNomineeSurveys = async (nomineeId) => {
     const allSurveys = await this.listSurveys();
-    const surveys = filter(
-      allSurveys.response,
-      (survey) => survey.nomineeId === nomineeId
-    );
-
-    return { response: surveys };
+    const surveys = map(allSurveys.response, (s, key) => {
+      s.key = key;
+      return s;
+    });
+    const response = filter(surveys, (s) => s.nomineeId === nomineeId);
+    return { response };
   };
 
   saveSurvey = (nomineeId, survey) => {

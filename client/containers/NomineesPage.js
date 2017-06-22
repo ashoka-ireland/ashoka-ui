@@ -28,7 +28,7 @@ const columns = [{
   title: 'Interview Nominee',
   key: 'interview',
   render: (text, record) => (
-    <Link to={`/nominees/${record.key}/survey/create`}>
+    <Link to={`/nominees/${record.key}/surveys/create`}>
       Interview Nominee
     </Link>
   )
@@ -42,6 +42,10 @@ class NomineesPage extends Component {
 
   componentWillMount = () => {
     this.props.actions.listNominees();
+  }
+
+  componentWillUnmount = () => {
+    this.props.actions.clearNomineeSearch();
   }
 
   search = (event) => {
