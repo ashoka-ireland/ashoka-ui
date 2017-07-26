@@ -31,6 +31,9 @@ export const organization = createReducer({}, {
 });
 
 export const nomineeOrganizations = createReducer([], {
+  [NomineeActionTypes.NOMINEE_GET.REQUEST]: () => {
+    return [];
+  },
   [NomineeActionTypes.NOMINEE_GET.SUCCESS]: (state, action) => {
     return action.response.orgs;
   },
