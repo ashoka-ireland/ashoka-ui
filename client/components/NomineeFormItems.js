@@ -92,7 +92,9 @@ const NomineeFormItems = props => {
         )}
       </FormItem>
       <FormItem {...formItemLayout} label="Year of Birth">
-        <InputNumber defaultValue={currentYear} min={1900} max={currentYear} />
+        {getFieldDecorator(constants.YEAR_OF_BIRTH)(
+          <InputNumber min={1900} max={currentYear} />
+        )}
       </FormItem>
       <FormItem {...formItemLayout} label="What is Your Nationality?">
         {getFieldDecorator(constants.NATIONALITY)(

@@ -12,6 +12,7 @@ export const GENDER = 'gender';
 export const NATIONALITY = 'nationality';
 export const COUNTRY_OF_RESIDENCE = 'countryOfResidence';
 export const ADDITIONAL_NOMINEE_INFO = 'additionalNomineeInfo';
+export const YEAR_OF_BIRTH = 'yearOfBirth';
 
 export const NOMINEE_VALUES = [
   FIRST_NAME,
@@ -27,7 +28,8 @@ export const NOMINEE_VALUES = [
   GENDER,
   NATIONALITY,
   COUNTRY_OF_RESIDENCE,
-  ADDITIONAL_NOMINEE_INFO
+  ADDITIONAL_NOMINEE_INFO,
+  YEAR_OF_BIRTH
 ];
 
 export const PLACE_OF_WORK = 'placeOfWork';
