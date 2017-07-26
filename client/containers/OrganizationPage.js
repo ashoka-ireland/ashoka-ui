@@ -18,6 +18,10 @@ class OrganizationPage extends Component {
       }
       this.props.actions.getOrganization(this.props.params.organizationKey);
     }
+
+    if(mode === 'create') {
+      this.props.actions.getOrganization(null);
+    }
   }
 
   save(organization) {
