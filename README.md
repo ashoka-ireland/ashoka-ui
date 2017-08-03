@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/zalando-incubator/ashoka-ui.svg?branch=master)](https://travis-ci.org/zalando-incubator/ashoka-ui)
+[![Build Status](https://travis-ci.org/ashoka-ireland/ashoka-ui.svg?branch=master)](https://travis-ci.org/ashoka-ireland/ashoka-ui)
 
 # Ashoka UI
 Ashoka Changemaker App
